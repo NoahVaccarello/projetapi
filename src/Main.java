@@ -2,6 +2,7 @@ import Ecole.Classe;
 
 public class Main {
     public static void main(String[] args) {
-        Classe c ;
+        System.out.println("Hello World");
+        System.out.println("Au revoir");
     }
 }
