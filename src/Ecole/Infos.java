@@ -7,70 +7,162 @@ import Ecole.Enseignant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe metier de gestion des infos
+ * @author Noah Vaccarello
+ * @version 1.0
+ */
+
 public class Infos {
 
+    /**
+     * identifiant des infos
+     */
     protected int idInfo;
+    /**
+     * nombre d'heures de cours
+     */
     protected int nbreHeures;
-    protected List<Ecole.Cours> Cours = new ArrayList<>();
-    protected List<Ecole.Classe> Classe = new ArrayList<>();
+    /**
+     *  cours d'une classe
+     */
+    protected Cours cours ;
+    /**
+     * ensemble des classe d'une école
+     */
+    protected List<Classe> Classe = new ArrayList<>();
+    /**
+     * enseignant d'un cours
+     */
     protected Enseignant enseignant;
-    protected Salle sale;
-
-    public Infos(int idInfo, int nbreHeures, List<Ecole.Cours> cours, List<Ecole.Classe> classe, Enseignant enseignant, Salle sale) {
-        this.idInfo = idInfo;
+    /**
+     * salle du cours
+     */
+    protected Salle salle;
+    /**
+     *
+     * @param cours cours d'une classe
+     * @param nbreHeures nombre d'heures de cours
+     */
+    public Infos(Cours cours , int nbreHeures) {
+        this.cours = cours;
         this.nbreHeures = nbreHeures;
-        Cours = cours;
-        Classe = classe;
-        this.enseignant = enseignant;
-        this.sale = sale;
     }
 
+    /**
+     *
+     * @param idInfo identifiant des infos
+     * @param nbreHeures nombre d'heures de cours
+     * @param cours cours d'une classe
+     * @param classe ensemble des classe d'une école
+     * @param enseignant enseignant d'un cours
+     * @param salle salle du cours
+     */
+
+    public Infos(int idInfo, int nbreHeures, Cours cours, List<Ecole.Classe> classe, Enseignant enseignant, Salle salle) {
+        this.idInfo = idInfo;
+        this.nbreHeures = nbreHeures;
+        this.cours = cours;
+        Classe = classe;
+        this.enseignant = enseignant;
+        this.salle = salle;
+    }
+
+    /**
+     * identifiant des infos
+     * @return identifiant des infos
+     */
+
+    public Cours getCours() {
+        return cours;
+    }
+
+    /**
+     * identifiant des infos
+     * @param cours identifiant des infos
+     */
+    public void setCours(Cours cours) {
+        this.cours = cours;
+    }
+
+    /**
+     * getter identifiant des infos
+     * @return identifiant des infos
+     */
     public int getIdInfo() {
         return idInfo;
     }
+
+    /**
+     * setter identifiant des infos
+     * @param idInfo identifiant des infos
+     */
 
     public void setIdInfo(int idInfo) {
         this.idInfo = idInfo;
     }
 
+    /**
+     * getter nombre d'heure de cours
+     * @return nombre d'heure de cours
+     */
+
     public int getNbreHeures() {
         return nbreHeures;
     }
+
+    /**
+     * setter nombre d'heure de cours
+     * @param nbreHeures nombre d'heure de cours
+     */
 
     public void setNbreHeures(int nbreHeures) {
         this.nbreHeures = nbreHeures;
     }
 
-    public List<Ecole.Cours> getCours() {
-        return Cours;
-    }
-
-    public void setCours(List<Ecole.Cours> cours) {
-        Cours = cours;
-    }
-
-    public List<Ecole.Classe> getClasse() {
+    /**
+     * getter de l'ensemble des classes
+     * @return de l'ensemble des classes
+     */
+    public List<Classe> getClasse() {
         return Classe;
     }
+
+    /**
+     * setter de l'ensemble des cours
+     * @param classe de l'ensemble des cours
+     */
 
     public void setClasse(List<Ecole.Classe> classe) {
         Classe = classe;
     }
-
+    /**
+     * getter des enseignant du cours
+     * @return des enseignant du cours
+     */
     public Enseignant getEnseignant() {
         return enseignant;
     }
-
+    /**
+     * setter des enseignant du cours
+     * @param enseignant des enseignant du cours
+     */
     public void setEnseignant(Enseignant enseignant) {
         this.enseignant = enseignant;
     }
-
-    public Salle getSale() {
-        return sale;
+    /**
+     * getter de la salle du cours
+     * @return  de la salle du cours
+     */
+    public Salle getSalle() {
+        return salle;
     }
-
-    public void setSale(Salle sale) {
-        this.sale = sale;
+    /**
+     * setter des enseignant du cours
+     * @param salle des enseignant du cours
+     */
+    public void setSalle(Salle salle) {
+        this.salle = salle;
     }
 
     @Override
@@ -78,10 +170,10 @@ public class Infos {
         return "Infos{" +
                 "idInfo=" + idInfo +
                 ", nbreHeures=" + nbreHeures +
-                ", Cours=" + Cours +
+                ", cours=" + cours +
                 ", Classe=" + Classe +
                 ", enseignant=" + enseignant +
-                ", sale=" + sale +
+                ", salle=" + salle +
                 '}';
     }
 }
