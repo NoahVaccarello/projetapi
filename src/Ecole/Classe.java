@@ -178,9 +178,10 @@ public class Classe {
 
     /**
      * Calcul du nombre total d'heures de cours pour cette classe
-     * @return
+     * @return total d'heure
      */
     public int nbreHeureTot() {
+
         int totalHeures = 0;
         for (Infos info : listInfo) {
             totalHeures += info.getNbreHeures();
@@ -191,7 +192,7 @@ public class Classe {
     /**
      * Verifie si la salle à la capacite d'accueillir une classe
      * @param salle salle du cours
-     * @return
+     * @return si la salle est dispo ou non
      */
     public boolean salleCapacitOK(Salle salle) {
 
@@ -224,8 +225,6 @@ public class Classe {
             }
         }
     }
-            //if(infos.getCours().getIdCours().equals(cours.getIdCours())) {
-
 
     /**
      * Modifie le cours avec un nouvel enseignant
@@ -346,6 +345,10 @@ public class Classe {
                 ", annee=" + annee +
                 ", specialite='" + specialite + '\'' +
                 ", nbreEleves=" + nbreEleves +
+                ", listInfo=" + listInfo +
+                ", enseignantEtHeures=" + enseignantEtHeures +
+                ", coursEtHeures=" + coursEtHeures +
+                ", salleetHeures=" + salleetHeures +
                 '}';
     }
 }
