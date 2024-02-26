@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Classe metier de gestion des infos
+ *
  * @author Noah Vaccarello
  * @version 1.0
  */
@@ -24,13 +25,10 @@ public class Infos {
      */
     protected int nbreHeures;
     /**
-     *  cours d'une classe
+     * cours d'une classe
      */
-    protected Cours cours ;
-    /**
-     * ensemble des classe d'une école
-     */
-    protected List<Classe> Classe = new ArrayList<>();
+    protected Cours cours;
+
     /**
      * enseignant d'un cours
      */
@@ -39,37 +37,35 @@ public class Infos {
      * salle du cours
      */
     protected Salle salle;
+
     /**
-     *
-     * @param cours cours d'une classe
+     * @param cours      cours d'une classe
      * @param nbreHeures nombre d'heures de cours
      */
-    public Infos(Cours cours , int nbreHeures) {
+    public Infos(Cours cours, int nbreHeures) {
         this.cours = cours;
         this.nbreHeures = nbreHeures;
     }
 
     /**
-     *
-     * @param idInfo identifiant des infos
+     * @param idInfo     identifiant des infos
      * @param nbreHeures nombre d'heures de cours
-     * @param cours cours d'une classe
-     * @param classe ensemble des classe d'une école
+     * @param cours      cours d'une classe
      * @param enseignant enseignant d'un cours
-     * @param salle salle du cours
+     * @param salle      salle du cours
      */
 
-    public Infos(int idInfo, int nbreHeures, Cours cours, List<Ecole.Classe> classe, Enseignant enseignant, Salle salle) {
+    public Infos(int idInfo, int nbreHeures, Cours cours, Enseignant enseignant, Salle salle) {
         this.idInfo = idInfo;
         this.nbreHeures = nbreHeures;
         this.cours = cours;
-        Classe = classe;
         this.enseignant = enseignant;
         this.salle = salle;
     }
 
     /**
      * identifiant des infos
+     *
      * @return identifiant des infos
      */
 
@@ -79,6 +75,7 @@ public class Infos {
 
     /**
      * identifiant des infos
+     *
      * @param cours identifiant des infos
      */
     public void setCours(Cours cours) {
@@ -87,6 +84,7 @@ public class Infos {
 
     /**
      * getter identifiant des infos
+     *
      * @return identifiant des infos
      */
     public int getIdInfo() {
@@ -95,6 +93,7 @@ public class Infos {
 
     /**
      * setter identifiant des infos
+     *
      * @param idInfo identifiant des infos
      */
 
@@ -104,6 +103,7 @@ public class Infos {
 
     /**
      * getter nombre d'heure de cours
+     *
      * @return nombre d'heure de cours
      */
 
@@ -113,6 +113,7 @@ public class Infos {
 
     /**
      * setter nombre d'heure de cours
+     *
      * @param nbreHeures nombre d'heure de cours
      */
 
@@ -121,44 +122,35 @@ public class Infos {
     }
 
     /**
-     * getter de l'ensemble des classes
-     * @return de l'ensemble des classes
-     */
-    public List<Classe> getClasse() {
-        return Classe;
-    }
-
-    /**
-     * setter de l'ensemble des cours
-     * @param classe de l'ensemble des cours
-     */
-
-    public void setClasse(List<Ecole.Classe> classe) {
-        Classe = classe;
-    }
-    /**
      * getter des enseignant du cours
+     *
      * @return des enseignant du cours
      */
     public Enseignant getEnseignant() {
         return enseignant;
     }
+
     /**
      * setter des enseignant du cours
+     *
      * @param enseignant des enseignant du cours
      */
     public void setEnseignant(Enseignant enseignant) {
         this.enseignant = enseignant;
     }
+
     /**
      * getter de la salle du cours
-     * @return  de la salle du cours
+     *
+     * @return de la salle du cours
      */
     public Salle getSalle() {
         return salle;
     }
+
     /**
      * setter des enseignant du cours
+     *
      * @param salle des enseignant du cours
      */
     public void setSalle(Salle salle) {
@@ -171,7 +163,6 @@ public class Infos {
                 "idInfo=" + idInfo +
                 ", nbreHeures=" + nbreHeures +
                 ", cours=" + cours +
-                ", Classe=" + Classe +
                 ", enseignant=" + enseignant +
                 ", salle=" + salle +
                 '}';

@@ -25,12 +25,12 @@ public class listeSalleetHeures {
 
     /**
      * constructeur paramétré
-     * @param idListeSalleetHeures identifiant de la liste de la salle et l'heure
-     * @param salle salle du cours
+     *
+     * @param salle      salle du cours
      * @param nbreHeures nombre d'heure de cours
      */
 
-    public listeSalleetHeures(int idListeSalleetHeures, Salle salle, int nbreHeures) {
+    public listeSalleetHeures(Salle salle, int nbreHeures) {
         this.idListeSalleetHeures = idListeSalleetHeures;
         this.salle = salle;
         this.nbreHeures = nbreHeures;

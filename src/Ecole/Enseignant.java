@@ -1,6 +1,7 @@
 package Ecole;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -38,7 +39,7 @@ public class Enseignant {
     /**
      * date d'engagement l'enseignant
      */
-    protected Date dateEngag;
+    protected LocalDate dateEngag;
     /**
      * nombre d'année de l'enseignant
      */
@@ -56,7 +57,7 @@ public class Enseignant {
      * @param annee nombre d'année de l'enseignant
      */
 
-    public Enseignant(int idEnseignant, String matricule, String nom, String prenom, String tel, int chargeSem, Date dateEngag, BigDecimal annee) {
+    public Enseignant(int idEnseignant, String matricule, String nom, String prenom, String tel, int chargeSem, LocalDate dateEngag, BigDecimal annee) {
         this.idEnseignant = idEnseignant;
         this.matricule = matricule;
         this.nom = nom;
@@ -177,10 +178,11 @@ public class Enseignant {
 
     /**
      * getter de la date d'engagement
+     *
      * @return date d'engagement
      */
 
-    public Date getDateEngag() {
+    public LocalDate getDateEngag() {
         return dateEngag;
     }
 
@@ -189,7 +191,7 @@ public class Enseignant {
      * @param dateEngag date d'engagemnt
      */
 
-    public void setDateEngag(Date dateEngag) {
+    public void setDateEngag(LocalDate dateEngag) {
         this.dateEngag = dateEngag;
     }
 

@@ -39,15 +39,15 @@ public class Classe {
     /**
      * liste des enseignants et heures associées
      */
-    protected List<EnseignantEtHeures> listeEnseignEtHeures = new ArrayList<>();
+    protected List<EnseignantEtHeures> enseignantEtHeures = new ArrayList<>();
     /**
      * liste des cours et heures associées
      */
-    protected List<listeCoursEtHeures> listeCoursEtHeures = new ArrayList<>();
+    protected List<listeCoursEtHeures> coursEtHeures = new ArrayList<>();
      /**
      * liste des salles et heures associées
      */
-    protected List<listeSalleetHeures> listeSalleetHeures = new ArrayList<>();
+    protected List<listeSalleetHeures> salleetHeures = new ArrayList<>();
 
     /**
      * constructeur paramétré
@@ -190,7 +190,7 @@ public class Classe {
 
     /**
      * Verifie si la salle à la capacite d'accueillir une classe
-     * @param salle
+     * @param salle salle du cours
      * @return
      */
     public boolean salleCapacitOK(Salle salle) {
@@ -209,108 +209,122 @@ public class Classe {
 
     /**
      * Ajoute un cours avec un nombre d'heures spécifié à la classe
-     * @param cours
-     * @param heures
+     * @param cours cours de la classe
+     * @param heures heures du cours
      */
+
     public void addCours(Cours cours, int heures) {
-        //TODO
+        for (Infos infos : listInfo){
+            if (infos.getCours().getIdCours().equals(cours.getIdCours())){
+                System.out.println("Impossible d'ajouter le cours (doublon)");;
+            }
+            else{
+                listInfo.add(new Infos(cours,heures));
+                System.out.println("Cours ajouté avec succès");
+            }
+        }
     }
+            //if(infos.getCours().getIdCours().equals(cours.getIdCours())) {
+
 
     /**
      * Modifie le cours avec un nouvel enseignant
-     * @param cours
-     * @param newEnseignant
+     * @param Chcours cours de la classe
+     * @param newEnseignant nouvel enseignant assignée au cours
      */
-    public void modifCours(Cours cours, Enseignant newEnseignant) {
+    public void modifCours(Cours Chcours, Enseignant newEnseignant) {
 
         for(Infos infos : listInfo){
-            if (infos.getCours().equals(cours)){
+            if (infos.getCours().equals(Chcours)){
                 infos.setEnseignant(newEnseignant);
-                System.out.println("Un nouvelle enseignant à été assigné");
+                System.out.println("Un nouvel enseignant à été assigné");
             }
         }
     }
 
     /**
      * Modifie le cours avec une nouvelle salle
-     * @param cours
-     * @param newSalle
+     * @param Chcours cours de la classe
+     * @param newSalle nouvelle salle assigné au cours
      */
-    public void modifCours(Cours cours, Salle newSalle) {
+    public void modifCours(Cours Chcours, Salle newSalle) {
         for(Infos infos : listInfo){
-            if (infos.getCours().equals(cours)){
+            if (infos.getCours().equals(Chcours)){
                 infos.setSalle(newSalle);
-                System.out.println("Un nouvelle enseignant à été assigné");
+                System.out.println("Une nouvelle salle à été assignée");
             }
         }
     }
 
     /**
      * Modifie le nombre d'heures attribuées à un cours
-     * @param cours
-     * @param newHeures
+     * @param Chcours cours de la classe
+     * @param newHeures nouvelle heure de cours
      */
-    public void modifCours(Cours cours, int newHeures) {
+    public void modifCours(Cours Chcours, int newHeures) {
 
         for(Infos infos : listInfo){
-            if (infos.getCours().equals(cours)){
+            if (infos.getCours().equals(Chcours)){
                 infos.setNbreHeures(newHeures);
-                System.out.println("Un nouvelle horaire à été assigné");
+                System.out.println("Un nouvel horaire à été assigné");
             }
         }
     }
 
     /**
      * Permet de supprimer un cours de la liste
-     * @param cours
+     * @param cours cours à supprimé
      */
 
-    public void suppCours(Cours cours){
+    public void suppCours(Infos cours){
         for (Infos infos : listInfo){
             if (infos.getCours().equals(cours)){
                 listInfo.remove(cours);
+            }
+            else {
+                System.out.println("Ce cours n'existe pas");
             }
         }
     }
 
     /**
-     * Affiche la liste des salles et des heures
+     *  liste de la salle et l'heure de cours
+     * @return la salle et l'heure
      */
-
-    public void listeSalleetHeures(){
-        int i ;
-        for (i=0;i<listeEnseignEtHeures.size();i++){
-
-            System.out.println(listeEnseignEtHeures);
+    public List<listeSalleetHeures> listeSalleetHeures(){
+        for(Infos infos : listInfo){
+            salleetHeures.add(new listeSalleetHeures(infos.getSalle(), infos.getNbreHeures()));
         }
+        return salleetHeures;
     }
 
     /**
-     * Affiche la liste des cours et des heures
+     * liste des cours et des heures
+     * @return cours et des heures
      */
 
-    public void listeCoursEtHeures(){
-        int i ;
-        for (i=0;i<listeCoursEtHeures.size();i++){
+    public List<listeCoursEtHeures> listeCoursEtHeures(){
 
-            System.out.println(listeCoursEtHeures);
+        for (Infos infos : listInfo){
+            coursEtHeures.add(new listeCoursEtHeures(infos.getCours(),infos.getNbreHeures()));
         }
+        return coursEtHeures;
     }
 
     /**
-     * Affiche la liste des enseignant et des heures
+     * liste des enseignant et de leurs heures de cours
+     * @return les enseignant et de leurs heures
      */
 
-    public void EnseignantEtHeures(){
-        int i ;
-        for (i=0;i<listeEnseignEtHeures.size();i++){
+    public List<EnseignantEtHeures> EnseignantEtHeures(){
 
-            System.out.println(listeEnseignEtHeures);
+        for (Infos infos : listInfo){
+            enseignantEtHeures.add(new EnseignantEtHeures(infos.getEnseignant(), infos.getNbreHeures()));
         }
+
+        return enseignantEtHeures;
     }
-
-
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

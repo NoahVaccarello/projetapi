@@ -13,34 +13,28 @@ public class Cours {
     /**
      * L'identifiant du cours.
      */
-    protected int idCours;
-
-    /**
-     * L'année du cours.
-     */
-    protected String annee;
-
+    protected String idCours;
     /**
      * L'intitulé du cours.
      */
     protected String intutle;
 
     /**
-     * Liste des cours.
+     * salle du cours
      */
-    protected List<Cours> listCours = new ArrayList<>();
+    protected Salle salleParDefaut;
 
     /**
      * Constructeur paramétré
      *
      * @param idCours L'identifiant du cours
-     * @param annee L'année du cours
      * @param intutle L'intitulé du cours
      */
-    public Cours(int idCours, String annee, String intutle) {
+
+    public Cours(String idCours, String intutle, Salle salleParDefaut) {
         this.idCours = idCours;
-        this.annee = annee;
         this.intutle = intutle;
+        this.salleParDefaut = salleParDefaut;
     }
 
     /**
@@ -48,35 +42,17 @@ public class Cours {
      *
      * @return identifiant du cours
      */
-    public int getIdCours() {
+    public String getIdCours() {
         return idCours;
     }
 
     /**
      * setter identifiant du cours.
-     *
      * @param idCours identifiant du cours
      */
-    public void setIdCours(int idCours) {
+
+    public void setIdCours(String idCours) {
         this.idCours = idCours;
-    }
-
-    /**
-     * getter année du cours.
-     *
-     * @return L'année du cours
-     */
-    public String getAnnee() {
-        return annee;
-    }
-
-    /**
-     * setter année du cours.
-     *
-     * @param annee année du cours
-     */
-    public void setAnnee(String annee) {
-        this.annee = annee;
     }
 
     /**
@@ -96,20 +72,19 @@ public class Cours {
     }
 
     /**
-     * getter liste des cours.
-     *
-     * @return liste des cours
+     * getter de la salle
+     * @return salle
      */
-    public List<Cours> getListCours() {
-        return listCours;
+    public Salle getSalle() {
+        return salleParDefaut;
     }
 
     /**
-     * setter liste des cours.
-     *
-     * @param listCours La nouvelle liste des cours
+     * setter de la salle
+     * @param salleParDefaut salle
      */
-    public void setListCours(List<Cours> listCours) {
-        this.listCours = listCours;
+
+    public void setSalle(Salle salleParDefaut) {
+        this.salleParDefaut = salleParDefaut;
     }
 }
