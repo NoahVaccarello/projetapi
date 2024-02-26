@@ -275,10 +275,10 @@ public class Classe {
      * @param cours cours à supprimé
      */
 
-    public void suppCours(Infos cours){
+    public void suppCours(Cours cours){
         for (Infos infos : listInfo){
             if (infos.getCours().equals(cours)){
-                listInfo.remove(cours);
+                listInfo.remove(infos);
             }
             else {
                 System.out.println("Ce cours n'existe pas");
