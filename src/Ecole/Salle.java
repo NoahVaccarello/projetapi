@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Salle {
 
+    protected static int id=1;
     /**
      * id de la salle
      */
@@ -32,14 +33,13 @@ public class Salle {
 
     /**
      * Constructeur paramétré
-     * @param idSalle id de la salle
      * @param sigle sigle de la la classe
      * @param capacite capacite de la salle
      * @param salleParDefaut ensemble de la sallepardefaut
      */
 
-    public Salle(int idSalle, String sigle, int capacite, List<Cours> salleParDefaut) {
-        this.idSalle = idSalle;
+    public Salle(String sigle, int capacite, List<Cours> salleParDefaut) {
+        this.idSalle = id++;
         this.sigle = sigle;
         this.capacite = capacite;
         this.salleParDefaut = salleParDefaut;

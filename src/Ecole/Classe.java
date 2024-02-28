@@ -6,12 +6,14 @@ import java.util.Objects;
 
 /**
  * Classe metier de gestion d'une classe d'école
+ *
  * @author Noah Vaccarello
  * @version 1.0
  */
 
 public class Classe {
 
+    protected static int id = 1;
     /**
      * identifiant de la classe
      */
@@ -35,7 +37,7 @@ public class Classe {
     /**
      * ensemble des infos d'une classe
      */
-    protected List <Infos> listInfo = new ArrayList<>() ;
+    protected List<Infos> listInfo = new ArrayList<>();
     /**
      * liste des enseignants et heures associées
      */
@@ -44,7 +46,7 @@ public class Classe {
      * liste des cours et heures associées
      */
     protected List<listeCoursEtHeures> coursEtHeures = new ArrayList<>();
-     /**
+    /**
      * liste des salles et heures associées
      */
     protected List<listeSalleetHeures> salleetHeures = new ArrayList<>();
@@ -52,15 +54,14 @@ public class Classe {
     /**
      * constructeur paramétré
      *
-     * @param idClasse identifiant de la classe
-     * @param sigle nom du sigle alphanumérique de la classe
-     * @param annee annee de la classe
+     * @param sigle      nom du sigle alphanumérique de la classe
+     * @param annee      annee de la classe
      * @param specialite nom de la specialité
      * @param nbreEleves nombre d'eleve dans la classe
      */
 
-    public Classe(int idClasse, String sigle, int annee, String specialite, int nbreEleves) {
-        this.idClasse = idClasse;
+    public Classe(String sigle, int annee, String specialite, int nbreEleves) {
+        this.idClasse = id++;
         this.sigle = sigle;
         this.annee = annee;
         this.specialite = specialite;
@@ -70,6 +71,7 @@ public class Classe {
 
     /**
      * getter de l'id de la classe
+     *
      * @return de l'id de la classe
      */
 
@@ -79,6 +81,7 @@ public class Classe {
 
     /**
      * setter de l'id de la classe
+     *
      * @param idClasse id de la classe
      */
 
@@ -88,6 +91,7 @@ public class Classe {
 
     /**
      * getter du sigle de la classe
+     *
      * @return du sigle de la classe
      */
 
@@ -97,6 +101,7 @@ public class Classe {
 
     /**
      * setter du sigle de la classe
+     *
      * @param sigle sigle de la classe
      */
 
@@ -106,6 +111,7 @@ public class Classe {
 
     /**
      * getter de l'année de la classe
+     *
      * @return de l'année de la classe
      */
 
@@ -115,6 +121,7 @@ public class Classe {
 
     /**
      * setter de l'année de la classe
+     *
      * @param annee l'année de la classe
      */
 
@@ -124,6 +131,7 @@ public class Classe {
 
     /**
      * getter de la spécialité de la classe
+     *
      * @return de la spécialité de la classe
      */
 
@@ -133,6 +141,7 @@ public class Classe {
 
     /**
      * setter de la spécialité de la classe
+     *
      * @param specialite la spécialité de la classe
      */
 
@@ -142,6 +151,7 @@ public class Classe {
 
     /**
      * getter du nombre d'élève de la classe
+     *
      * @return du nombre d'élève de la classe
      */
 
@@ -151,6 +161,7 @@ public class Classe {
 
     /**
      * setter du nombre d'élève de la classe
+     *
      * @param nbreEleves nombre d'élève de la classe
      */
 
@@ -160,6 +171,7 @@ public class Classe {
 
     /**
      * getter le cours de la classe
+     *
      * @return le cours de la classe
      */
 
@@ -169,6 +181,7 @@ public class Classe {
 
     /**
      * setter le cours de la classe
+     *
      * @param listInfo le cours de la classe
      */
     public void setListInfo(List<Infos> listInfo) {
@@ -178,6 +191,7 @@ public class Classe {
 
     /**
      * Calcul du nombre total d'heures de cours pour cette classe
+     *
      * @return total d'heure
      */
     public int nbreHeureTot() {
@@ -191,18 +205,17 @@ public class Classe {
 
     /**
      * Verifie si la salle à la capacite d'accueillir une classe
+     *
      * @param salle salle du cours
      * @return si la salle est dispo ou non
      */
     public boolean salleCapacitOK(Salle salle) {
 
-        if (salle.capacite<=getNbreEleves()) {
+        if (salle.capacite <= getNbreEleves()) {
 
             System.out.println("La salle de classe est disponible");
-            return true ;
-        }
-
-        else {
+            return true;
+        } else {
             System.out.println("Salle de classe indisponible");
             return false;
         }
@@ -210,17 +223,18 @@ public class Classe {
 
     /**
      * Ajoute un cours avec un nombre d'heures spécifié à la classe
-     * @param cours cours de la classe
+     *
+     * @param cours  cours de la classe
      * @param heures heures du cours
      */
 
     public void addCours(Cours cours, int heures) {
-        for (Infos infos : listInfo){
-            if (infos.getCours().getIdCours().equals(cours.getIdCours())){
-                System.out.println("Impossible d'ajouter le cours (doublon)");;
-            }
-            else{
-                listInfo.add(new Infos(cours,heures));
+        for (Infos infos : listInfo) {
+            if (infos.getCours().getCode().equals(cours.getCode())) {
+                System.out.println("Impossible d'ajouter le cours (doublon)");
+                ;
+            } else {
+                listInfo.add(new Infos(cours, heures));
                 System.out.println("Cours ajouté avec succès");
             }
         }
@@ -228,13 +242,14 @@ public class Classe {
 
     /**
      * Modifie le cours avec un nouvel enseignant
-     * @param Chcours cours de la classe
+     *
+     * @param Chcours       cours de la classe
      * @param newEnseignant nouvel enseignant assignée au cours
      */
     public void modifCours(Cours Chcours, Enseignant newEnseignant) {
 
-        for(Infos infos : listInfo){
-            if (infos.getCours().equals(Chcours)){
+        for (Infos infos : listInfo) {
+            if (infos.getCours().equals(Chcours)) {
                 infos.setEnseignant(newEnseignant);
                 System.out.println("Un nouvel enseignant à été assigné");
             }
@@ -243,12 +258,13 @@ public class Classe {
 
     /**
      * Modifie le cours avec une nouvelle salle
-     * @param Chcours cours de la classe
+     *
+     * @param Chcours  cours de la classe
      * @param newSalle nouvelle salle assigné au cours
      */
     public void modifCours(Cours Chcours, Salle newSalle) {
-        for(Infos infos : listInfo){
-            if (infos.getCours().equals(Chcours)){
+        for (Infos infos : listInfo) {
+            if (infos.getCours().equals(Chcours)) {
                 infos.setSalle(newSalle);
                 System.out.println("Une nouvelle salle à été assignée");
             }
@@ -257,13 +273,14 @@ public class Classe {
 
     /**
      * Modifie le nombre d'heures attribuées à un cours
-     * @param Chcours cours de la classe
+     *
+     * @param Chcours   cours de la classe
      * @param newHeures nouvelle heure de cours
      */
     public void modifCours(Cours Chcours, int newHeures) {
 
-        for(Infos infos : listInfo){
-            if (infos.getCours().equals(Chcours)){
+        for (Infos infos : listInfo) {
+            if (infos.getCours().equals(Chcours)) {
                 infos.setNbreHeures(newHeures);
                 System.out.println("Un nouvel horaire à été assigné");
             }
@@ -272,26 +289,30 @@ public class Classe {
 
     /**
      * Permet de supprimer un cours de la liste
+     *
      * @param cours cours à supprimé
      */
 
-    public void suppCours(Cours cours){
-        for (Infos infos : listInfo){
-            if (infos.getCours().equals(cours)){
-                listInfo.remove(infos);
-            }
-            else {
-                System.out.println("Ce cours n'existe pas");
+    public boolean suppCours(Cours cours) {
+        boolean ok = false;
+        for (Infos info : listInfo) {
+            if (info.getCours().equals(cours)) {
+                listInfo.remove(info);
+                ok = true;
+                break;
             }
         }
+        return ok;
     }
 
+
     /**
-     *  liste de la salle et l'heure de cours
+     * liste de la salle et l'heure de cours
+     *
      * @return la salle et l'heure
      */
-    public List<listeSalleetHeures> listeSalleetHeures(){
-        for(Infos infos : listInfo){
+    public List<listeSalleetHeures> listeSalleetHeures() {
+        for (Infos infos : listInfo) {
             salleetHeures.add(new listeSalleetHeures(infos.getSalle(), infos.getNbreHeures()));
         }
         return salleetHeures;
@@ -299,42 +320,44 @@ public class Classe {
 
     /**
      * liste des cours et des heures
+     *
      * @return cours et des heures
      */
 
-    public List<listeCoursEtHeures> listeCoursEtHeures(){
+    public List<listeCoursEtHeures> listeCoursEtHeures() {
 
-        for (Infos infos : listInfo){
-            coursEtHeures.add(new listeCoursEtHeures(infos.getCours(),infos.getNbreHeures()));
+        for (Infos infos : listInfo) {
+            coursEtHeures.add(new listeCoursEtHeures(infos.getCours(), infos.getNbreHeures()));
         }
         return coursEtHeures;
     }
 
     /**
      * liste des enseignant et de leurs heures de cours
+     *
      * @return les enseignant et de leurs heures
      */
 
-    public List<EnseignantEtHeures> EnseignantEtHeures(){
+    public List<EnseignantEtHeures> EnseignantEtHeures() {
 
-        for (Infos infos : listInfo){
+        for (Infos infos : listInfo) {
             enseignantEtHeures.add(new EnseignantEtHeures(infos.getEnseignant(), infos.getNbreHeures()));
         }
 
         return enseignantEtHeures;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Classe classe = (Classe) o;
-        return idClasse == classe.idClasse && annee == classe.annee && nbreEleves == classe.nbreEleves && Objects.equals(sigle, classe.sigle) && Objects.equals(specialite, classe.specialite) && Objects.equals(listInfo, classe.listInfo);
+        return idClasse == classe.idClasse && annee == classe.annee && nbreEleves == classe.nbreEleves && Objects.equals(sigle, classe.sigle) && Objects.equals(specialite, classe.specialite) && Objects.equals(listInfo, classe.listInfo) && Objects.equals(enseignantEtHeures, classe.enseignantEtHeures) && Objects.equals(coursEtHeures, classe.coursEtHeures) && Objects.equals(salleetHeures, classe.salleetHeures);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idClasse, sigle, annee, specialite, nbreEleves, listInfo);
+        return Objects.hash(idClasse, sigle, annee, specialite, nbreEleves, listInfo, enseignantEtHeures, coursEtHeures, salleetHeures);
     }
 
     @Override

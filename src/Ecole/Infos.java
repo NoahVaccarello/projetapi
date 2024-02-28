@@ -16,6 +16,7 @@ import java.util.List;
 
 public class Infos {
 
+    protected static int id=1;
     /**
      * identifiant des infos
      */
@@ -48,15 +49,14 @@ public class Infos {
     }
 
     /**
-     * @param idInfo     identifiant des infos
      * @param nbreHeures nombre d'heures de cours
      * @param cours      cours d'une classe
      * @param enseignant enseignant d'un cours
      * @param salle      salle du cours
      */
 
-    public Infos(int idInfo, int nbreHeures, Cours cours, Enseignant enseignant, Salle salle) {
-        this.idInfo = idInfo;
+    public Infos( int nbreHeures, Cours cours, Enseignant enseignant, Salle salle) {
+        this.idInfo = id++;
         this.nbreHeures = nbreHeures;
         this.cours = cours;
         this.enseignant = enseignant;
@@ -167,4 +167,5 @@ public class Infos {
                 ", salle=" + salle +
                 '}';
     }
+
 }

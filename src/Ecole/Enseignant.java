@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class Enseignant {
 
+    protected static int id=1;
     /**
      *  id de l'enseignant
      */
@@ -47,7 +48,6 @@ public class Enseignant {
 
     /**
      *
-     * @param idEnseignant id de l'enseignant
      * @param matricule matricule de l'enseignant
      * @param nom nom de l'enseignant
      * @param prenom prenom de l'enseignant
@@ -57,8 +57,8 @@ public class Enseignant {
      * @param annee nombre d'année de l'enseignant
      */
 
-    public Enseignant(int idEnseignant, String matricule, String nom, String prenom, String tel, int chargeSem, LocalDate dateEngag, BigDecimal annee) {
-        this.idEnseignant = idEnseignant;
+    public Enseignant(String matricule, String nom, String prenom, String tel, int chargeSem, LocalDate dateEngag, BigDecimal annee) {
+        this.idEnseignant = id++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
@@ -212,4 +212,6 @@ public class Enseignant {
     public void setAnnee(BigDecimal annee) {
         this.annee = annee;
     }
+
+
 }
