@@ -1,6 +1,6 @@
-package Ecole;
+package Ecole.metier;
 
-import Ecole.Cours;
+import Ecole.metier.Cours;
 
 import java.util.ArrayList;
 import java.util.List;

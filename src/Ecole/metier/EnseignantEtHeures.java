@@ -1,4 +1,4 @@
-package Ecole;
+package Ecole.metier;
 
 /**
  * Classe metier de gestion d'une classe d'école

@@ -1,11 +1,4 @@
-package Ecole;
-
-import Ecole.Classe;
-import Ecole.Cours;
-import Ecole.Enseignant;
-
-import java.util.ArrayList;
-import java.util.List;
+package Ecole.metier;
 
 /**
  * Classe metier de gestion des infos

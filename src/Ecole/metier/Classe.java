@@ -1,4 +1,4 @@
-package Ecole;
+package Ecole.metier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +66,17 @@ public class Classe {
         this.annee = annee;
         this.specialite = specialite;
         this.nbreEleves = nbreEleves;
-
     }
+
+    public Classe(int id, String sigle, int annee, String specialite, int nbreEleves) {
+        this.idClasse = id++;
+        this.sigle = sigle;
+        this.annee = annee;
+        this.specialite = specialite;
+        this.nbreEleves = nbreEleves;
+    }
+
+
 
     /**
      * getter de l'id de la classe
@@ -346,6 +355,8 @@ public class Classe {
 
         return enseignantEtHeures;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,4 @@
-package Ecole;
-
-import java.util.ArrayList;
-import java.util.List;
+package Ecole.metier;
 
 /**
  * Classe représentant un cours d'une école.

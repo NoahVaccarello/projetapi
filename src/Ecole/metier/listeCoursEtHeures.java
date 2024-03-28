@@ -1,4 +1,4 @@
-package Ecole;
+package Ecole.metier;
 
 import java.util.Objects;
 
