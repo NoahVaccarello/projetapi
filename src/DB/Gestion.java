@@ -1,4 +1,4 @@
-package Ecole;
+package DB;
 
 import Ecole.metier.Classe;
 import myconnections.DBConnection;
@@ -90,7 +90,7 @@ public class Gestion {
 
         public void recherche() {
 
-            System.out.println("id du client recherché ");
+            System.out.println("id de la classe recherché ");
             int idrech = sc.nextInt();
             String query = "select * from API2_CLASSE where id_classe = ?";
             try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
@@ -115,7 +115,7 @@ public class Gestion {
             System.out.println("id de la classe recherchée ");
             int idrech = sc.nextInt();
             sc.skip("\n");
-            System.out.println("nouveau sigle ");
+            System.out.println("nouveau sigle : ");
             String sigle = sc.nextLine();
             String query = "update API2_CLASSE set sigle=? where id_classe = ?";
             try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
