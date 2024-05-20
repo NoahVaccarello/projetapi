@@ -65,7 +65,7 @@ public class CoursViewConsole extends CoursAbstractView {
 
         int nl = choixElt(cl);
         Cours c = cl.get(nl-1);
-        boolean ok = classeController.remove(c);
+        boolean ok = classeController.removeCours(c);
         if(ok) affMsg("cours effacé");
         else affMsg("cours non effacé");
     }

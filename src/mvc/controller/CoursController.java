@@ -24,7 +24,7 @@ public class CoursController {
         return model.addCours(cours);
     }
 
-    public boolean remove(Cours cours) {
+    public boolean removeCours(Cours cours) {
         return model.removeCours(cours);
     }
 

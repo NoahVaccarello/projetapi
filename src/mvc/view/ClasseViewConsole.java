@@ -65,7 +65,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
         int nl = choixElt(cl);
         Classe cla = cl.get(nl-1);
-        boolean ok = classeController.remove(cla);
+        boolean ok = classeController.removeClasse(cla);
         if(ok) affMsg("classe effacé");
         else affMsg("classe non effacé");
     }

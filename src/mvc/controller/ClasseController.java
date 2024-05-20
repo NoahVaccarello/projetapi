@@ -23,7 +23,7 @@ public class ClasseController {
         return  model.addClasse(classe);
     }
 
-    public boolean remove(Classe classe) {
+    public boolean removeClasse(Classe classe) {
         return model.removeClasse(classe);
     }
 
