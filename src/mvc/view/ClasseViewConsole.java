@@ -56,7 +56,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
     private void rechercher() {
-        System.out.println("idProduit : ");
+        System.out.println("id de la classe : ");
         int id_classe = sc.nextInt();
         classeController.search(id_classe);
     }
@@ -66,8 +66,8 @@ public class ClasseViewConsole extends ClasseAbstractView {
         int nl = choixElt(cl);
         Classe cla = cl.get(nl-1);
         boolean ok = classeController.remove(cla);
-        if(ok) affMsg("produit effacé");
-        else affMsg("produit non effacé");
+        if(ok) affMsg("classe effacé");
+        else affMsg("classe non effacé");
     }
 
     private void ajouter() {

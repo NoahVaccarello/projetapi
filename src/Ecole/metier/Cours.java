@@ -42,6 +42,12 @@ public class Cours {
         this.intutle = intutle;
         this.salleParDefaut = salleParDefaut;
     }
+    public Cours(int id ,String code, String intutle, Salle salleParDefaut) {
+        this.id_cours= id++;
+        this.code = code;
+        this.intutle = intutle;
+        this.salleParDefaut = salleParDefaut;
+    }
 
     /**
      * getter code du cours.

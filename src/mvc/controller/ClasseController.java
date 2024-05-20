@@ -19,8 +19,8 @@ public class ClasseController {
     public List<Classe> getAll(){
         return model.getClasse();
     }
-    public Classe addClasse(Classe client) {
-        return  model.addClasse(client);
+    public Classe addClasse(Classe classe) {
+        return  model.addClasse(classe);
     }
 
     public boolean remove(Classe classe) {
