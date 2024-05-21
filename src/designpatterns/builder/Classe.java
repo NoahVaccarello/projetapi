@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Classe {
+
     protected static int id = 1;
     /**
      * identifiant de la classe

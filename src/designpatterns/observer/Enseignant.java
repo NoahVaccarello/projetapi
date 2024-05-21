@@ -1,17 +1,8 @@
-package Ecole.metier;
+package designpatterns.observer;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 
-/**
- * Classe metier de gestion d'une classe d'école
- *
- * @author Noah Vaccarello
- * @version 1.0
- */
-
-public class Enseignant {
+public class Enseignant extends Observer {
 
     protected static int id = 1;
     /**
@@ -204,16 +195,7 @@ public class Enseignant {
     }
 
     @Override
-    public String toString() {
-        return "Enseignant{" +
-                "idEnseignant=" + idEnseignant +
-                ", matricule='" + matricule + '\'' +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", tel='" + tel + '\'' +
-                ", chargeSem=" + chargeSem +
-                ", salaireMensu=" + salaireMensu +
-                ", dateEngag=" + dateEngag +
-                '}';
+    public void update(String msg) {
+        System.out.println(prenom + nom + "a reçu le message : "+ msg);
     }
 }
