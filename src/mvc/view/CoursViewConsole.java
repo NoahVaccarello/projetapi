@@ -1,4 +1,4 @@
-package mvc.view;
+/*package mvc.view;
 
 import Ecole.metier.Cours;
 import Ecole.metier.Cours;
@@ -89,5 +89,5 @@ public class CoursViewConsole extends CoursAbstractView {
         Cours c = cl.get(nl-1);
         return c;
     }
-}
+}*/
 

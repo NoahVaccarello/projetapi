@@ -38,13 +38,13 @@ public class Enseignant {
      */
     protected int chargeSem;
     /**
-     * date d'engagement l'enseignant
+     * salaire mensuel de l'enseignant
      */
-    protected LocalDate dateEngag;
+    protected double salaireMensu;
     /**
-     * nombre d'année de l'enseignant
+     * date d'engagement de l'enseignant
      */
-    protected BigDecimal annee;
+    protected Date dateEngag;
 
     /**
      *
@@ -54,18 +54,17 @@ public class Enseignant {
      * @param tel numéro de téléphone l'enseignant
      * @param chargeSem charge de la semaine l'enseignant
      * @param dateEngag date d'engagement l'enseignant
-     * @param annee nombre d'année de l'enseignant
      */
 
-    public Enseignant(String matricule, String nom, String prenom, String tel, int chargeSem, LocalDate dateEngag, BigDecimal annee) {
+    public Enseignant(int idEnseignant,String matricule, String nom, String prenom, String tel, int chargeSem, double salaireMensu, Date dateEngag) {
         this.idEnseignant = id++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.chargeSem = chargeSem;
+        this.salaireMensu = salaireMensu;
         this.dateEngag = dateEngag;
-        this.annee = annee;
     }
 
     /**
@@ -176,42 +175,15 @@ public class Enseignant {
         this.chargeSem = chargeSem;
     }
 
-    /**
-     * getter de la date d'engagement
-     *
-     * @return date d'engagement
-     */
-
-    public LocalDate getDateEngag() {
-        return dateEngag;
-    }
-
-    /**
-     * setter de la date d'engagement
-     * @param dateEngag date d'engagemnt
-     */
-
-    public void setDateEngag(LocalDate dateEngag) {
+    public void setDateEngag(Date dateEngag) {
         this.dateEngag = dateEngag;
     }
 
-    /**
-     * getter année de l'enseignant
-     * @return année de l'enseignant
-     */
-
-    public BigDecimal getAnnee() {
-        return annee;
+    public double getSalaireMensu() {
+        return salaireMensu;
     }
 
-    /**
-     * setter année de l'enseignant
-     * @param annee année de l'enseignant
-     */
-
-    public void setAnnee(BigDecimal annee) {
-        this.annee = annee;
+    public void setSalaireMensu(double salaireMensu) {
+        this.salaireMensu = salaireMensu;
     }
-
-
 }

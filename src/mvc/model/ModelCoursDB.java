@@ -1,4 +1,4 @@
-package mvc.model;
+/*package mvc.model;
 
 
 import Ecole.metier.Cours;
@@ -149,4 +149,4 @@ public class ModelCoursDB extends DAOcours{
     public List getNotification() {
         return getCours();
     }
-}
+}*/

@@ -29,20 +29,20 @@ public class Salle {
     /**
      * ensemble de la sallepardefaut
      */
-    protected List<Cours> salleParDefaut = new ArrayList<>();
+    protected List<Cours> Cours = new ArrayList<>();
 
     /**
      * Constructeur paramétré
      * @param sigle sigle de la la classe
      * @param capacite capacite de la salle
-     * @param salleParDefaut ensemble de la sallepardefaut
+     * @param cours ensemble de la sallepardefaut
      */
 
-    public Salle(String sigle, int capacite, List<Cours> salleParDefaut) {
+    public Salle(String sigle, int capacite, List<Cours> cours) {
         this.idSalle = id++;
         this.sigle = sigle;
         this.capacite = capacite;
-        this.salleParDefaut = salleParDefaut;
+        this.Cours = cours;
     }
 
     /**
@@ -103,17 +103,17 @@ public class Salle {
      * getter de la salle par defaut
      * @return la salle par defaut
      */
-
-    public List<Cours> getSalleParDefaut() {
-        return salleParDefaut;
+    public List<Ecole.metier.Cours> getCours() {
+        return Cours;
     }
+
 
     /**
      * setter de la salle par defaut
-     * @param salleParDefaut la salle par defaut
+     * @param cours la salle par defaut
      */
 
-    public void setSalleParDefaut(List<Cours> salleParDefaut) {
-        this.salleParDefaut = salleParDefaut;
+    public void setCours(List<Ecole.metier.Cours> cours) {
+        Cours = cours;
     }
 }
