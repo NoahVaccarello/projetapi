@@ -35,14 +35,12 @@ public class Salle {
      * Constructeur paramétré
      * @param sigle sigle de la la classe
      * @param capacite capacite de la salle
-     * @param cours ensemble de la sallepardefaut
      */
 
-    public Salle(String sigle, int capacite, List<Cours> cours) {
-        this.idSalle = id++;
-        this.sigle = sigle;
-        this.capacite = capacite;
-        this.Cours = cours;
+    public Salle(int idSalle,String sigle, int capacite){
+        this.idSalle=idSalle;
+        this.sigle=sigle;
+        this.capacite=capacite;
     }
 
     /**

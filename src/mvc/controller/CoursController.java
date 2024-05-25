@@ -20,7 +20,7 @@ public class CoursController {
         return model.getCours();
     }
 
-    public Cours addClasse(Cours cours) {
+    public Cours addCours(Cours cours) {
         return model.addCours(cours);
     }
 
@@ -32,7 +32,7 @@ public class CoursController {
         return model.updateCours(cours);
     }
 
-    public Cours search(int id_cours) {
+    public Cours searchCours(int id_cours) {
         return model.readCours(id_cours);
     }
 }

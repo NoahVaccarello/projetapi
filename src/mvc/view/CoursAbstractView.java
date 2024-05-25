@@ -8,12 +8,13 @@ import java.util.List;
 
 public abstract class CoursAbstractView implements Observer {
 
-    protected CoursController classeController;
+    protected CoursController coursController;
     protected List<Cours> cl;
 
-    public void  setController(CoursController classeController){
-        this.classeController=classeController;
+    public void setController(CoursController coursController) {
+        this.coursController = coursController;
     }
+
     public abstract void affMsg(String msg);
 
     public abstract Cours selectionner();

@@ -31,7 +31,7 @@ public class ClasseController {
         return model.updateClasse(classe);
     }
 
-    public Classe search(int id_classe ) {
+    public Classe searchClasse(int id_classe ) {
         return model.readClasse(id_classe);
     }
 }

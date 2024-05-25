@@ -58,7 +58,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     private void rechercher() {
         System.out.println("id de la classe : ");
         int id_classe = sc.nextInt();
-        classeController.search(id_classe);
+        classeController.searchClasse(id_classe);
     }
 
     private void retirer() {
