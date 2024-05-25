@@ -147,12 +147,12 @@ public class ModelClasseDB extends DAOclasse{
 
     @Override
     public boolean addCours(Classe classe, Cours cours, int nbrheure) {
-        String query = "insert into  API2_COURS(id_cours,code,intule,sallepardefaut) values(?,?,?,?)";
+        String query = "insert into  API2_COURS(id_cours,code,intitule,id_salle) values(?,?,?,?)";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,classe.getIdClasse());
             pstm.setInt(2,cours.getId_cours());
             pstm.setInt(3,nbrheure);
-            pstm.setDate(4,cours.getSalleParDefaut().getIdSalle());
+            pstm.setInt(4,cours.getSalleParDefaut().getIdSalle());
             int n = pstm.executeUpdate();
             if(n!=0) return true;
             else return false;
@@ -166,61 +166,139 @@ public class ModelClasseDB extends DAOclasse{
 
     @Override
     public boolean modifCours(Classe classe, Cours cours, Salle salle) {
-        return false;
+        String query = "update  API2_COURS set id_salle = ? where id_classe = ? AND id_cours = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,salle.getIdSalle());
+            pstm.setInt(2,cours.getId_cours());
+            pstm.setInt(3,classe.getIdClasse());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean modifCours(Classe classe, Cours cours, Enseignant enseignant) {
-        return false;
+        String query = "update  API2_COURS set id_enseignant = ? where id_classe = ? AND id_cours = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,enseignant.getIdEnseignant());
+            pstm.setInt(2,cours.getId_cours());
+            pstm.setInt(3,classe.getIdClasse());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean modifCours(Classe classe, Cours cours, int nbrheure) {
-        return false;
+        String query = "update  API2_COURS set nbrheure = ? where id_classe = ? AND id_cours = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,nbrheure);
+            pstm.setInt(2,cours.getId_cours());
+            pstm.setInt(3,classe.getIdClasse());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean suppCours(Classe classe, Cours cours) {
-        return false;
+
+        String query = "DELETE FROM  API2_COURS where  id_classe = ? AND id_cours = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,classe.getIdClasse());
+            pstm.setInt(2,cours.getId_cours());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public List<Infos> getCours(Classe classe) {
-        return List.of();
+
+        String query = "SELECT * FROM  API2_COURS where  id_classe = ?";
+        List<Infos> ll = new ArrayList<>();
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query) ){
+            pstm.setInt(1,classe.getIdClasse());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                //todo
+                int id_cours = rs.getInt("Id du cours");
+                String code = rs.getString("Code du cours");
+                String intitule = rs.getString("Intitule du cours");
+                int id_salle = rs.getInt("Id de la salle");
+                //Salle salleParDefaut= salleController.searchSalle(id_salle);
+                //Infos i = new Cours(id_cours, code, intitule, salleParDefaut);
+                //pour faire cela je dois donc demander cours enseignant ect...
+                //ll.add(i);
+            }
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+        }
+        return ll;
+    }
+
+
+
+    @Override
+    public int nbrHeuresTot(Classe classe) {
+
+        return 0;
+    }
+
+    @Override
+    public List<EnseignantEtHeures> enseignantEtHeures(Classe classe) {
+
+        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
+        //return recherche(classe,query);
+        return null;
+    }
+
+    @Override
+    public List<listeSalleetHeures> coursEtHeures(Classe classe) {
+        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
+        //return recherche(classe,query);
+        return null;
+    }
+
+    @Override
+    public List<listeCoursEtHeures> salleetHeures(Classe classe) {
+        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
+        //return recherche(classe,query);
+        return null;
+    }
+
+    @Override
+    public boolean salleCapacitOK(Salle salle) {
+
+
+
+        return false;
     }
 
     @Override
     public List getNotification() {
         return getClasse();
     }
-
-    @Override
-    public int nbrHeuresTot(Classe classe) {
-        //todo methode
-        return 0;
-    }
-
-    @Override
-    public List<EnseignantEtHeures> enseignantEtHeures(Classe classe) {
-        //todo
-        return List.of();
-    }
-
-    @Override
-    public List<listeSalleetHeures> coursEtHeures(Classe classe) {
-        return List.of();
-    }
-
-    @Override
-    public List<listeCoursEtHeures> salleetHeures(Classe classe) {
-        return List.of();
-    }
-
-    @Override
-    public boolean salleCapacitOK(Salle salle) {
-        return false;
-    }
-
 
 
 }
