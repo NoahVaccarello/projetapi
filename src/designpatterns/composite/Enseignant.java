@@ -1,4 +1,4 @@
-package Ecole.metier;
+package designpatterns.composite;
 
 import java.time.LocalDate;
 

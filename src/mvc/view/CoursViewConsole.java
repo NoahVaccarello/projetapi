@@ -1,8 +1,8 @@
 package mvc.view;
 
-import Ecole.metier.*;
-
-import mvc.model.*;
+import Ecole.metier.Cours;
+import Ecole.metier.Salle;
+import mvc.controller.SalleController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,11 +10,15 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 import static utilitaires.Utilitaire.*;
-import static utilitaires.Utilitaire.choixListe;
 
 public class CoursViewConsole extends CoursAbstractView {
     private Scanner sc = new Scanner(System.in);
 
+    private SalleController salleController; // code qui provient de Audry, je n'arrivais pas a encoder la sallepardefaut
+
+    public CoursViewConsole(SalleController salleController) {
+        this.salleController = salleController;
+    }
 
     @Override
     public void affMsg(String msg) {
@@ -57,8 +61,8 @@ public class CoursViewConsole extends CoursAbstractView {
         Cours c = cl.get(nl - 1);
         String code = modifyIfNotBlank("numéro du code", c.getCode());
         String intitule = modifyIfNotBlank("Intitulé du cours", " " + c.getIntutle());
-        int salleParDefaut = parseInt(modifyIfNotBlank("Numéro de la salle : ", "" + c.getSalleParDefaut().getIdSalle()));
-        //TODO Salle salle = DAOsalle.readSalle(salleid);
+        int id_salle = parseInt(modifyIfNotBlank("Numéro de la salle : ", "" + c.getSalleParDefaut().getIdSalle()));
+        Salle salleParDefaut = salleController.searchSalle(id_salle);
         Cours cmaj = coursController.updateCours(new Cours(c.getId_cours(), code, intitule, salleParDefaut));
         if (cmaj == null) affMsg("mise à jour infrucueuse");
         else affMsg("mise à jour effectuée : " + cmaj);
@@ -85,8 +89,8 @@ public class CoursViewConsole extends CoursAbstractView {
         System.out.print("Intitule : ");
         String intitule = sc.nextLine();
         System.out.print("Salle par defaut :");
-        String salleParDefaut = sc.nextLine();
-        //todo salle par defaut probleme
+        int id_salle = sc.nextInt();
+        Salle salleParDefaut = salleController.searchSalle(id_salle);
         Cours c = coursController.addCours(new Cours(0, code, intitule, salleParDefaut));
         if (c != null) affMsg("création de :" + c);
         else affMsg("erreur de création");

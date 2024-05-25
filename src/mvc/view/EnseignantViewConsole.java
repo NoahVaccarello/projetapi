@@ -2,13 +2,13 @@ package mvc.view;
 
 import Ecole.metier.Enseignant;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 import static utilitaires.Utilitaire.*;
-import static utilitaires.Utilitaire.choixListe;
 
 public class EnseignantViewConsole extends EnseignantAbstractView{
     private Scanner sc = new Scanner(System.in);
@@ -57,8 +57,8 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         String tel = modifyIfNotBlank("tel", enseignant.getTel());
         int chargeSem = parseInt(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
         double salaireMensu = Double.parseDouble(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
-        java.util.Date date = enseignant.getDateEngag();
-        java.sql.Date dateengag = new java.sql.Date(date.getTime());
+        String date = modifyIfNotBlank("date de fin :", enseignant.getDateEngag() + "");
+        LocalDate dateengag = !date.equals("null") ? LocalDate.parse(date) : null;
         Enseignant ens =enseignantController.updateEnseignant(new Enseignant(enseignant.getIdEnseignant(), matricule, nom, prenom, tel, chargeSem, salaireMensu, dateengag));
         if(ens==null) affMsg("mise à jour infructueuse");
         else affMsg("mise à jour effectuée : "+ens);
@@ -97,8 +97,9 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         System.out.print("salaire mensu : ");
         double salairemensu = Double.parseDouble(sc.nextLine());
         System.out.print("Date : ");
-        //TODO Date date ;
-        Enseignant enseignant = enseignantController.addEnseignant(new Enseignant(0,matricule,nom,prenom,tel,chargesem,salairemensu,dateengag)) ;
+        String date = sc.nextLine();
+        LocalDate datee = LocalDate.parse(date);
+        Enseignant enseignant = enseignantController.addEnseignant(new Enseignant(0,matricule,nom,prenom,tel,chargesem,salairemensu,datee)) ;
         if(enseignant!=null) affMsg("création de :"+enseignant);
         else affMsg("erreur de création");
     }

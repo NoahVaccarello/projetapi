@@ -1,6 +1,6 @@
 package mvc.view;
 
-import Ecole.metier.Classe;
+import Ecole.metier.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     @Override
     public void affMsg(String msg) {
-        System.out.println("information:"+msg);
+        System.out.println("information:" + msg);
     }
 
     @Override
@@ -23,36 +23,83 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
 
-    public void menu(){
+    public void menu() {
         update(classeController.getAll());
-        do{
-            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "fin"));
+        do {
+            int ch = choixListe(Arrays.asList("ajouter un cours", "retirer un cours", "rechercher un cours", "modifier un cours", "fin"));
 
-            switch(ch){
-                case 1: ajouter();
+            switch (ch) {
+                case 1:
+                    ajouter();
                     break;
-                case 2 : retirer();
+                case 2:
+                    retirer();
                     break;
-                case 3: rechercher();
+                case 3:
+                    rechercher();
                     break;
-                case 4 : modifier();
+                case 4:
+                    modifier();
                     break;
-                case 5 : return;
+                case 5:
+                    return;
             }
-        }while(true);
+        } while (true);
     }
 
-    private void modifier() {
-        int nl = choixElt(cl);
+    private void special(Classe cl) {
+        do {
+            int ch = choixListe(Arrays.asList("ajouter produit", "modifier produit", "supprimer produit", "lister produits", "menu principal"));
 
-        Classe cla = cl.get(nl-1);
-        String sigle= modifyIfNotBlank("numéro du sigle",cla.getSigle());
-        int annee = Integer.parseInt(modifyIfNotBlank("Annee de cours",""+cla.getAnnee()));
-        String specialite = modifyIfNotBlank("Specialite : ",cla.getSpecialite());
-        int nbreEleves = Integer.parseInt(modifyIfNotBlank("Nombre d'élvève ",""+cla.getNbreEleves()));
-        Classe clamaj = classeController.updateClasse(new Classe(cla.getIdClasse(),sigle,annee,specialite,nbreEleves));
-        if(clamaj==null) affMsg("mise à jour infrucueuse");
-        else affMsg("mise à jour effectuée : "+clamaj);
+            switch (ch) {
+                case 1:
+                    ajouterCours(cl);
+                    break;
+                case 2:
+                    nbrHeuretot(cl);
+                    break;
+                case 3:
+                    modifierCoursHeure(cl);
+                    break;
+                case 4:
+                    modifierCoursSalle(cl);
+                    break;
+                case 5:
+                    modifierCoursEnseignant(cl);
+                    break;
+                case 6:
+                    supprimerCours(cl);
+                    break;
+                case 7:
+                    listerCours(cl);
+                    break;
+                case 8:
+                   //supprimerCours(cl);
+                    break;
+                case 9:
+                    //supprimerCours(cl);
+                    break;
+                case 10:
+                    return;
+                default:
+                    System.out.println("choix invalide recommencez ");
+            }
+        } while (true);
+
+    }
+
+
+    private void modifier() {
+
+        int nl = choixElt(cl);
+        Classe cla = cl.get(nl - 1);
+        String sigle = modifyIfNotBlank("numéro du sigle", cla.getSigle());
+        int annee = Integer.parseInt(modifyIfNotBlank("Annee de cours", "" + cla.getAnnee()));
+        String specialite = modifyIfNotBlank("Specialite : ", cla.getSpecialite());
+        int nbreEleves = Integer.parseInt(modifyIfNotBlank("Nombre d'élvève ", "" + cla.getNbreEleves()));
+        Classe clamaj = classeController.updateClasse(new Classe(cla.getIdClasse(), sigle, annee, specialite, nbreEleves));
+        if (clamaj == null) affMsg("mise à jour infrucueuse");
+        else affMsg("mise à jour effectuée : " + clamaj);
     }
 
     private void rechercher() {
@@ -64,32 +111,102 @@ public class ClasseViewConsole extends ClasseAbstractView {
     private void retirer() {
 
         int nl = choixElt(cl);
-        Classe cla = cl.get(nl-1);
+        Classe cla = cl.get(nl - 1);
         boolean ok = classeController.removeClasse(cla);
-        if(ok) affMsg("classe effacé");
+        if (ok) affMsg("classe effacé");
         else affMsg("classe non effacé");
     }
 
     private void ajouter() {
         System.out.print("numéro du sigle : ");
-        String sigle= sc.nextLine();
+        String sigle = sc.nextLine();
         System.out.print("Année : ");
         int annee = sc.nextInt();
         System.out.print("Specialité :");
         String specialite = sc.nextLine();
         System.out.print("Nombre d'élève : ");
         int nbreEleves = Integer.parseInt(sc.next());
-        Classe cla = classeController.addClasse(new Classe(0,sigle,annee,specialite,nbreEleves)) ;
-        if(cla!=null) affMsg("création de :"+cla);
+        Classe cla = classeController.addClasse(new Classe(0, sigle, annee, specialite, nbreEleves));
+        if (cla != null) affMsg("création de :" + cla);
         else affMsg("erreur de création");
     }
 
     @Override
-    public Classe selectionner(){
+    public Classe selectionner() {
         update(classeController.getAll());
-        int nl =  choixListe(cl);
-        Classe cla = cl.get(nl-1);
+        int nl = choixListe(cl);
+        Classe cla = cl.get(nl - 1);
         return cla;
     }
+
+    private void nbrHeuretot(Classe cl) {
+        int heuretot = classeController.nbrHeuresTot(cl);
+        affMsg("heuretot: " + heuretot);
+    }
+
+    public void salleCapaciteOK(Salle salle) {
+
+        //todo
+
+    }
+
+    public void ajouterCours(Classe cl) {
+        System.out.println("Ajouter un cours");
+        Cours cr = coursA.selectionner();
+        System.out.println("Nombre d'heure du cours : ");
+        int heure = sc.nextInt();
+        boolean ok = classeController.addCours(cl, cr, heure);
+        if (ok) affMsg("Cours ajouté avec succes");
+        else affMsg("erreur lors de l'ajout du cours");
+    }
+
+    public void modifierCoursHeure(Classe cl) {
+        System.out.println("Modifier un cours");
+        Cours cr = coursA.selectionner();
+        System.out.println("Nombre d'heure du cours : ");
+        int heure = sc.nextInt();
+        boolean ok = classeController.modifCours(cl, cr, heure);
+        if (ok) affMsg("Mise a jour réussie");
+        else affMsg("erreur lors de la mise a jour du cours");
+
+    }
+
+    public void modifierCoursSalle(Classe cl) {
+        System.out.println("Modifier un cours");
+        Cours cr = coursA.selectionner();
+        System.out.println("Numero de la salle : ");
+        Salle salle = salleA.selectionner();
+        boolean ok = classeController.modifCours(cl, cr, salle);
+        if (ok) affMsg("Mise a jour réussie");
+        else affMsg("erreur lors de la mise a jour du cours");
+
+    }
+
+    public void modifierCoursEnseignant(Classe cl) {
+        System.out.println("Modifier un cours");
+        Cours cr = coursA.selectionner();
+        System.out.println("Ensiegnant : ");
+        Enseignant nom = enseignantA.selectionner();
+        boolean ok = classeController.modifCours(cl, cr, nom);
+        if (ok) affMsg("Mise a jour réussie");
+        else affMsg("erreur lors de la mise a jour du cours");
+
+    }
+
+    private void supprimerCours(Classe cl) {
+        System.out.println("suppression d'un cours");
+        Cours cr = coursA.selectionner();
+        boolean ok = classeController.suppCours(cl, cr);
+        if (ok) affMsg("cours supprimée");
+        else affMsg("cours non supprimée");
+    }
+
+    private void listerCours(Classe cl) {
+        System.out.println("pCours");
+        List<Infos> listinfo = classeController.getCours(cl);
+        if(listinfo.isEmpty()) affMsg("aucune ligne pour cette commmande");
+        else affList(listinfo);
+    }
+
 }
 

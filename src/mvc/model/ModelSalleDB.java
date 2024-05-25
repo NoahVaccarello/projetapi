@@ -4,7 +4,6 @@ package mvc.model;
 import Ecole.metier.Salle;
 import myconnections.DBConnection;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +94,11 @@ public class ModelSalleDB extends DAOsalle{
     }
 
     @Override
+    public Salle searchSalle(Salle salle) {
+        return null;
+    }
+
+    @Override
     public Salle readSalle(int idSalle) {
         String query = "select * from API2_SALLE where idSalle = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
@@ -116,6 +120,7 @@ public class ModelSalleDB extends DAOsalle{
             return null;
         }
     }
+
 
     @Override
     public List<Salle> getSalle() {
@@ -140,6 +145,6 @@ public class ModelSalleDB extends DAOsalle{
 
     @Override
     public List getNotification() {
-        return getSalles();
+        return getSalle();
     }
 }

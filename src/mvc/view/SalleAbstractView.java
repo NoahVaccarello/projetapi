@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class SalleAbstractView implements Observer {
 
     protected SalleController salleController;
+
     protected List<Salle> cl;
 
     public void  setController(SalleController salleController){

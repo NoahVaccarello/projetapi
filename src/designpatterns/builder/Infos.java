@@ -1,8 +1,6 @@
-package DesignPatterns.Builder;
+package designpatterns.builder;
 
 import Ecole.metier.Salle;
-import designpatterns.builder.Cours;
-import designpatterns.builder.Enseignant;
 
 public class Infos {
     protected static int id=1;

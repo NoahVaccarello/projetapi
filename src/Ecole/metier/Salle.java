@@ -1,7 +1,5 @@
 package Ecole.metier;
 
-import Ecole.metier.Cours;
-
 import java.util.ArrayList;
 import java.util.List;
 

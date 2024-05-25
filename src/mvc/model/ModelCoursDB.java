@@ -3,10 +3,9 @@ package mvc.model;
 
 import Ecole.metier.Cours;
 import Ecole.metier.Salle;
+import mvc.controller.SalleController;
 import myconnections.DBConnection;
 
-
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +14,15 @@ import java.util.List;
 public class ModelCoursDB extends DAOcours{
 
     protected Connection dbConnect;
+    protected SalleController salleController;
 
-    public ModelCoursDB(){
+    public ModelCoursDB(SalleController salleController) {
+        this.salleController = salleController;
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.err.println("erreur de connexion");
-
             System.exit(1);
         }
-
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ModelCoursDB extends DAOcours{
         ){
             pstm1.setString(1,cours.getCode());
             pstm1.setString(2,cours.getIntutle());
-        //  pstm1.setInt(3,cours.getSalleParDefaut().getIdSalle());
+            pstm1.setInt(3,cours.getSalleParDefaut().getIdSalle());
             int n = pstm1.executeUpdate();
             if(n==1){
                 pstm2.setInt(1,cours.getId_cours());
@@ -84,7 +83,7 @@ public class ModelCoursDB extends DAOcours{
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1,cours.getCode());
             pstm.setString(2,cours.getIntutle());
-            //  pstm.setInt(3,cours.getSalleParDefaut().getIdSalle());
+            pstm.setInt(3,cours.getSalleParDefaut().getIdSalle());
             int n = pstm.executeUpdate();
             notifyObservers();
             if(n!=0) return readCours(cours.getId_cours());
@@ -106,8 +105,8 @@ public class ModelCoursDB extends DAOcours{
             if(rs.next()){
                 String code = rs.getString(2);
                 String intitule = rs.getString(3);
-                int salleParDefaut = rs.getInt(4);
-                //TODO
+                int id_salle = rs.getInt(4);
+                Salle salleParDefaut= salleController.searchSalle(id_salle);
                 Cours c = new Cours(id_cours,code,intitule,salleParDefaut);
                 return c;
 
@@ -132,10 +131,10 @@ public class ModelCoursDB extends DAOcours{
                 int id_cours = rs.getInt(1);
                 String code = rs.getString(2);
                 String intitule = rs.getString(3);
-                int salleParDefaut = rs.getInt(4);
-                //TODO
-                //Cours c = new Cours(id_cours,code,intitule,salleParDefaut);
-                //lp.add(c);
+                int id_salle = rs.getInt(4);
+                Salle salleParDefaut= salleController.searchSalle(id_salle);
+                Cours c = new Cours(id_cours, code, intitule, salleParDefaut);
+                lp.add(c);
             }
             return lp;
         } catch (SQLException e) {

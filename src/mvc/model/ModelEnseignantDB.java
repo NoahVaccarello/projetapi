@@ -3,10 +3,9 @@ package mvc.model;
 import Ecole.metier.Enseignant;
 import myconnections.DBConnection;
 
-import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -37,7 +36,10 @@ public class ModelEnseignantDB extends DAOenseignant{
             pstm1.setString(4,enseignant.getTel());
             pstm1.setInt(5,enseignant.getChargeSem());
             pstm1.setDouble(6,enseignant.getSalaireMensu());
-           //TODO pstm1.setDate(7,enseignant.getDateEngag());
+            LocalDate d1 = enseignant.getDateEngag();
+            pstm1.setDate(7, java.sql.Date.valueOf(d1)); //intelij m'a proposé cela comme solution car
+            // si je mettais uniqement (7,d1) cela ne fonctionnais pas et je ne trouvais pas de solution
+
             int n = pstm1.executeUpdate();
             if(n==1){
                 pstm2.setInt(1,enseignant.getIdEnseignant());
@@ -90,7 +92,8 @@ public class ModelEnseignantDB extends DAOenseignant{
             pstm.setString(4,enseignant.getTel());
             pstm.setInt(5,enseignant.getChargeSem());
             pstm.setDouble(6,enseignant.getSalaireMensu());
-          //TODO  pstm.setDate(7,enseignant.getDateEngag());
+            LocalDate d1 = enseignant.getDateEngag();
+            pstm.setDate(7, java.sql.Date.valueOf(d1)); // j'ai refais pareil que dans la methode addEnseignant
             int n = pstm.executeUpdate();
             notifyObservers();
             if(n!=0) return readEnseignant(enseignant.getIdEnseignant());
@@ -116,7 +119,7 @@ public class ModelEnseignantDB extends DAOenseignant{
                 String tel = rs.getString(5);
                 int chargesem = rs.getInt(6);
                 double salairemensu = rs.getDouble(7);
-                Date dateengag = rs.getDate(8);
+                LocalDate dateengag = rs.getDate(8).toLocalDate(); // j'ai eu bcp de complication avec localDta j'ai donc fais une demande sur chatGPT
                 Enseignant e = new Enseignant(id_enseignant, matricule, nom, prenom, tel, chargesem, salairemensu, dateengag);
                 return e;
 
@@ -145,7 +148,7 @@ public class ModelEnseignantDB extends DAOenseignant{
                 String tel = rs.getString(5);
                 int chargeSem = rs.getInt(6);
                 double salairemensu = rs.getDouble(7);
-                Date dateengag = rs.getDate(8);
+                LocalDate dateengag = rs.getDate(8).toLocalDate();
                 Enseignant ens = new Enseignant(id_enseignant, matricule, nom, prenom, tel, chargeSem, salairemensu, dateengag);
                 es.add(ens);
             }

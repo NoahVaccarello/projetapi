@@ -4,7 +4,6 @@ import Ecole.metier.Cours;
 import mvc.model.DAOcours;
 import mvc.view.ClasseAbstractView;
 
-
 import java.util.List;
 
 public class CoursController {

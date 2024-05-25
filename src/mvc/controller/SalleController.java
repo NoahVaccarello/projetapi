@@ -1,9 +1,9 @@
 package mvc.controller;
 
 
+import Ecole.metier.Salle;
 import mvc.model.DAOsalle;
 import mvc.view.SalleAbstractView;
-import Ecole.metier.Salle;
 
 import java.util.List;
 

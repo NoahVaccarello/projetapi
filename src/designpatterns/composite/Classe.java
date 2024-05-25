@@ -6,7 +6,6 @@ import Ecole.metier.Infos;
 import Ecole.metier.Salle;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 

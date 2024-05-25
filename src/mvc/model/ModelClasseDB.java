@@ -1,11 +1,9 @@
 package mvc.model;
 
 
-import Ecole.metier.Classe;
+import Ecole.metier.*;
 import myconnections.DBConnection;
 
-
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +146,81 @@ public class ModelClasseDB extends DAOclasse{
     }
 
     @Override
+    public boolean addCours(Classe classe, Cours cours, int nbrheure) {
+        String query = "insert into  API2_COURS(id_cours,code,intule,sallepardefaut) values(?,?,?,?)";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,classe.getIdClasse());
+            pstm.setInt(2,cours.getId_cours());
+            pstm.setInt(3,nbrheure);
+            pstm.setDate(4,cours.getSalleParDefaut().getIdSalle());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean modifCours(Classe classe, Cours cours, Salle salle) {
+        return false;
+    }
+
+    @Override
+    public boolean modifCours(Classe classe, Cours cours, Enseignant enseignant) {
+        return false;
+    }
+
+    @Override
+    public boolean modifCours(Classe classe, Cours cours, int nbrheure) {
+        return false;
+    }
+
+    @Override
+    public boolean suppCours(Classe classe, Cours cours) {
+        return false;
+    }
+
+    @Override
+    public List<Infos> getCours(Classe classe) {
+        return List.of();
+    }
+
+    @Override
     public List getNotification() {
         return getClasse();
     }
+
+    @Override
+    public int nbrHeuresTot(Classe classe) {
+        //todo methode
+        return 0;
+    }
+
+    @Override
+    public List<EnseignantEtHeures> enseignantEtHeures(Classe classe) {
+        //todo
+        return List.of();
+    }
+
+    @Override
+    public List<listeSalleetHeures> coursEtHeures(Classe classe) {
+        return List.of();
+    }
+
+    @Override
+    public List<listeCoursEtHeures> salleetHeures(Classe classe) {
+        return List.of();
+    }
+
+    @Override
+    public boolean salleCapacitOK(Salle salle) {
+        return false;
+    }
+
+
+
 }
