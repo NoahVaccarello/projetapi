@@ -2,16 +2,16 @@ package mvc.controller;
 
 import Ecole.metier.Enseignant;
 import mvc.model.DAOenseignant;
-import mvc.view.ClasseAbstractView;
+import mvc.view.EnseignantAbstractView;
 
 import java.util.List;
 
 public class EnseignantController {
 
     private DAOenseignant model;
-    private ClasseAbstractView view;
+    private EnseignantAbstractView view;
 
-    public EnseignantController(DAOenseignant model, ClasseAbstractView view) {
+    public EnseignantController(DAOenseignant model, EnseignantAbstractView view) {
         this.model = model;
         this.view = view;
     }

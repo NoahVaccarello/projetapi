@@ -36,18 +36,26 @@ public class Cours {
      * @param intutle L'intitulé du cours
      */
 
-    public Cours(String code, String intutle, Salle salleParDefaut) {
+    /*public Cours(String code, String intutle, Salle salleParDefaut) {
         this.id_cours= id++;
         this.code = code;
         this.intutle = intutle;
         this.salleParDefaut = salleParDefaut;
-    }
+    }*/
+
     public Cours(int id ,String code, String intutle, Salle salleParDefaut) {
         this.id_cours= id++;
         this.code = code;
         this.intutle = intutle;
         this.salleParDefaut = salleParDefaut;
     }
+
+    public Cours(int id_cours, String code, String intitule) {
+        this.id_cours = id_cours;
+        this.code = code;
+        this.intutle = intitule;
+    }
+
 
     /**
      * getter code du cours.

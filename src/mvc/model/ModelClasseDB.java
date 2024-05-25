@@ -5,6 +5,7 @@ import Ecole.metier.*;
 import myconnections.DBConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -261,36 +262,93 @@ public class ModelClasseDB extends DAOclasse{
 
     @Override
     public int nbrHeuresTot(Classe classe) {
-
+        //todo
         return 0;
     }
 
     @Override
-    public List<EnseignantEtHeures> enseignantEtHeures(Classe classe) {
+    public List<EnseignantEtHeures>  enseignantEtHeures(Classe classe) {
+        List<EnseignantEtHeures> listEnsHeure = new ArrayList<>();
+        String query = "SELECT ense.*, i.nbreHeure FROM API2_ENSEIGNANT e JOIN API2_INFOS i ON e.idEnseignant = i.idEnseignant WHERE i.idClasse = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,classe.getIdClasse());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                int id_ens = rs.getInt(2);
+                String matricule = rs.getString(3);
+                String nom = rs.getString(4);
+                String prenom = rs.getString(5);
+                String tel = rs.getString(6);
+                int chargesem= rs.getInt(7);
+                Double salaireMensu = rs.getDouble(8);
+                LocalDate dateEngagement= rs.getDate(9).toLocalDate();
+                int nbrHeure = rs.getInt(10);
+                Enseignant en = new Enseignant(id_ens,matricule,nom,prenom,tel,chargesem,salaireMensu,dateEngagement);
+                EnseignantEtHeures enseignantEtHeures = new EnseignantEtHeures(en,nbrHeure);
+                listEnsHeure.add(enseignantEtHeures);
+            }
+            return listEnsHeure;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :"+e);
 
-        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
-        //return recherche(classe,query);
-        return null;
+            return null;
+        }
     }
 
     @Override
-    public List<listeSalleetHeures> coursEtHeures(Classe classe) {
-        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
-        //return recherche(classe,query);
-        return null;
+    public List<ListeCoursEtHeures> coursEtHeures(Classe classe) {
+        //todo verifier si les nom de variable sont bon sur le pc principal
+        List<ListeCoursEtHeures> listeCoursEtHeures = new ArrayList<>();
+        String query = "SELECT c.*, i.nbreHeure FROM API2_SALLE e JOIN API2_INFOS i ON c.id_cours = i.id_cours WHERE i.idClasse = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,classe.getIdClasse());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                int idCours = rs.getInt(2);
+                String code = rs.getString(3);
+                String intitule = rs.getString(4);
+                int heures = rs.getInt(5);
+                Cours cours = new Cours(idCours, code,intitule);
+                ListeCoursEtHeures listeCoursHeures = new ListeCoursEtHeures(cours, heures);
+                listeCoursEtHeures.add(listeCoursHeures);
+            }
+            return listeCoursEtHeures;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :"+e);
+
+            return null;
+        }
     }
 
     @Override
-    public List<listeCoursEtHeures> salleetHeures(Classe classe) {
-        //String query = "select * from API2_COURS where id_cours = ? AND  IS NOT NULL order by IDCOMMANDE ";
-        //return recherche(classe,query);
-        return null;
+    public List<ListeSalleetHeures> salleetHeures(Classe classe) {
+        //todo verifier si les nom de variable sont bon sur le pc principal
+        List<ListeSalleetHeures> listSalleHeure = new ArrayList<>();
+        String query = "SELECT salle.*, i.nbreHeure FROM API2_SALLE e JOIN API2_INFOS i ON salle.idSalle = i.idSalle WHERE i.idClasse = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,classe.getIdClasse());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                int idSalle = rs.getInt(2);
+                String sigle = rs.getString(3);
+                int capacite = rs.getInt(4);
+                int nbrHeure = rs.getInt(5);
+                Salle salle = new Salle(idSalle,sigle,capacite);
+                ListeSalleetHeures listeSalleetHeures = new ListeSalleetHeures(salle,nbrHeure);
+                listSalleHeure.add(listeSalleetHeures);
+            }
+            return listSalleHeure;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :"+e);
+
+            return null;
+        }
     }
 
     @Override
     public boolean salleCapacitOK(Salle salle) {
 
-
+        //todo
 
         return false;
     }

@@ -8,7 +8,7 @@ import java.util.Objects;
  * @version 1.0
  */
 
-public class listeCoursEtHeures {
+public class ListeCoursEtHeures {
 
     /**
      *  Cours d'une classe
@@ -24,7 +24,7 @@ public class listeCoursEtHeures {
      * @param cours Le cours associé
      * @param nbreHeures Le nombre d'heures pour ce cours
      */
-    public listeCoursEtHeures(Cours cours, int nbreHeures) {
+    public ListeCoursEtHeures(Cours cours, int nbreHeures) {
         this.cours = cours;
         this.nbreHeures = nbreHeures;
     }
@@ -65,7 +65,7 @@ public class listeCoursEtHeures {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        listeCoursEtHeures that = (listeCoursEtHeures) o;
+        ListeCoursEtHeures that = (ListeCoursEtHeures) o;
         return nbreHeures == that.nbreHeures && Objects.equals(cours, that.cours);
     }
 

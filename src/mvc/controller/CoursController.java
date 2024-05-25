@@ -2,15 +2,15 @@ package mvc.controller;
 
 import Ecole.metier.Cours;
 import mvc.model.DAOcours;
-import mvc.view.ClasseAbstractView;
+import mvc.view.CoursAbstractView;
 
 import java.util.List;
 
 public class CoursController {
     private DAOcours model;
-    private ClasseAbstractView view;
+    private CoursAbstractView view;
 
-    public CoursController(DAOcours model, ClasseAbstractView view) {
+    public CoursController(DAOcours model, CoursAbstractView view) {
         this.model = model;
         this.view = view;
     }

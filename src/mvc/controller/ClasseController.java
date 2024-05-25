@@ -46,12 +46,11 @@ public class ClasseController {
     }
 
 
-    public List<listeSalleetHeures> coursEtHeures(Classe classe) {
+    public List<ListeCoursEtHeures> coursEtHeures(Classe classe) {
         return model.coursEtHeures(classe);
     }
 
-
-    public List<listeCoursEtHeures> salleetHeures(Classe classe) {
+    public List<ListeSalleetHeures> salleetHeures(Classe classe) {
         return model.salleetHeures(classe);
     }
 

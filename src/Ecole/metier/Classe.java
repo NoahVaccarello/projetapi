@@ -45,11 +45,11 @@ public class Classe {
     /**
      * liste des cours et heures associées
      */
-    protected List<listeCoursEtHeures> coursEtHeures = new ArrayList<>();
+    protected List<ListeCoursEtHeures> coursEtHeures = new ArrayList<>();
     /**
      * liste des salles et heures associées
      */
-    protected List<listeSalleetHeures> salleetHeures = new ArrayList<>();
+    protected List<ListeSalleetHeures> salleetHeures = new ArrayList<>();
 
     /**
      * constructeur paramétré
@@ -320,9 +320,9 @@ public class Classe {
      *
      * @return la salle et l'heure
      */
-    public List<listeSalleetHeures> listeSalleetHeures() {
+    public List<ListeSalleetHeures> listeSalleetHeures() {
         for (Infos infos : listInfo) {
-            salleetHeures.add(new listeSalleetHeures(infos.getSalle(), infos.getNbreHeures()));
+            salleetHeures.add(new ListeSalleetHeures(infos.getSalle(), infos.getNbreHeures()));
         }
         return salleetHeures;
     }
@@ -333,10 +333,10 @@ public class Classe {
      * @return cours et des heures
      */
 
-    public List<listeCoursEtHeures> listeCoursEtHeures() {
+    public List<ListeCoursEtHeures> listeCoursEtHeures() {
 
         for (Infos infos : listInfo) {
-            coursEtHeures.add(new listeCoursEtHeures(infos.getCours(), infos.getNbreHeures()));
+            coursEtHeures.add(new ListeCoursEtHeures(infos.getCours(), infos.getNbreHeures()));
         }
         return coursEtHeures;
     }

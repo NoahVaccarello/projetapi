@@ -21,9 +21,9 @@ public abstract class DAOclasse extends Subject {
 
     public abstract List<EnseignantEtHeures> enseignantEtHeures(Classe classe);
 
-    public abstract List<listeSalleetHeures> coursEtHeures(Classe classe);
+    public abstract List<ListeCoursEtHeures> coursEtHeures(Classe classe);
 
-    public abstract List<listeCoursEtHeures> salleetHeures(Classe classe);
+    public abstract List<ListeSalleetHeures> salleetHeures(Classe classe);
 
     public abstract boolean salleCapacitOK(Salle salle);
 

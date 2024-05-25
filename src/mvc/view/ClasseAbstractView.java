@@ -18,15 +18,15 @@ public abstract class ClasseAbstractView implements Observer {
         this.classeController=classeController;
     }
 
-    public void setSalleA(SalleAbstractView salleA) {
+    public void setSalleView(SalleAbstractView salleA) {
         this.salleA = salleA;
     }
 
-    public void setCoursA(CoursAbstractView coursA) {
+    public void setCoursView(CoursAbstractView coursA) {
         this.coursA = coursA;
     }
 
-    public void setEnseignantA(EnseignantAbstractView enseignantA) {
+    public void setEnseignantView(EnseignantAbstractView enseignantA) {
         this.enseignantA = enseignantA;
     }
 

@@ -12,7 +12,7 @@ public class EnseignantEtHeures {
      * L'enseignant associé
      */
 
-    protected Enseignant enseignant; //
+    protected Enseignant enseignant;
     /**
      * nombre d'heures attribuées à cet enseignant
      */
