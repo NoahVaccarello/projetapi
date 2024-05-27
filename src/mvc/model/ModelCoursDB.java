@@ -106,7 +106,7 @@ public class ModelCoursDB extends DAOcours{
                 String code = rs.getString(2);
                 String intitule = rs.getString(3);
                 int id_salle = rs.getInt(4);
-                Salle salleParDefaut= salleController.searchSalle(id_salle);
+                Salle salleParDefaut= salleController.searchSalle(id_salle); // code provenant d'audry car j'avais du mal avec la salle
                 Cours c = new Cours(id_cours,code,intitule,salleParDefaut);
                 return c;
 
