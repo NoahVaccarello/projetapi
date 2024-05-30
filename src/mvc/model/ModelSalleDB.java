@@ -26,8 +26,7 @@ public class ModelSalleDB extends DAOsalle{
     @Override
     public Salle addSalle (Salle salle) {
         String query1 = "insert into API2_Salle(sigle,capacite) values(?,?)";
-        //todo verifier si les id ect sont correct quand tu aura de la connection pour aller sur sqldevelopper
-        String query2 = "select idSalle from API2_CLASSE where sigle= ?";
+        String query2 = "select id_salle from API2_CLASSE where sigle= ?";
         try(PreparedStatement pstm1= dbConnect.prepareStatement(query1);
             PreparedStatement pstm2= dbConnect.prepareStatement(query2);
         ){
@@ -60,7 +59,7 @@ public class ModelSalleDB extends DAOsalle{
 
     @Override
     public boolean removeSalle(Salle salle) {
-        String query = "delete from API2_SALLE where idSalle = ?";
+        String query = "delete from API2_SALLE where id_salle = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,salle.getIdSalle());
             int n = pstm.executeUpdate();
@@ -77,7 +76,7 @@ public class ModelSalleDB extends DAOsalle{
 
     @Override
     public Salle updateSalle(Salle salle) {
-        String query = "update API2_SALLE set sigle =?,capacite=?where idSalle = ?";
+        String query = "update API2_SALLE set sigle =?,capacite=?where id_salle = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, salle.getSigle());
             pstm.setInt(2,salle.getCapacite());
@@ -100,7 +99,7 @@ public class ModelSalleDB extends DAOsalle{
 
     @Override
     public Salle readSalle(int idSalle) {
-        String query = "select * from API2_SALLE where idSalle = ?";
+        String query = "select * from API2_SALLE where id_salle = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,idSalle);
             ResultSet rs = pstm.executeQuery();

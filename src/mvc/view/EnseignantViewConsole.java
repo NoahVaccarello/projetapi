@@ -20,7 +20,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
 
     @Override
     public void menu() {
-        update(enseignantController.getAllEnseignant());
+        update(enseignantController.getAll());
         do {
 
             int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "fin"));
@@ -106,7 +106,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
 
     @Override
     public Enseignant selectionner() {
-        update(enseignantController.getAllEnseignant());
+        update(enseignantController.getAll());
         int nl = choixListe(cl);
         Enseignant ens = cl.get(nl - 1);
         return ens;

@@ -1,6 +1,7 @@
 package mvc.view;
 
 import Ecole.metier.*;
+import mvc.GestEcole;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     public void menu() {
         update(classeController.getAll());
         do {
-            int ch = choixListe(Arrays.asList("ajouter un cours", "retirer un cours", "rechercher un cours", "modifier un cours", "fin"));
+            int ch = choixListe(Arrays.asList("ajouter une classe", "retirer une classe", "rechercher une classe", "modifier une classe", "fin"));
 
             switch (ch) {
                 case 1:
@@ -49,7 +50,10 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void special(Classe cl) {
         do {
-            int ch = choixListe(Arrays.asList("ajouter produit", "modifier produit", "supprimer produit", "lister produits", "menu principal"));
+
+            affMsg(" Classe " + cl.toString());
+
+            int ch = choixListe(Arrays.asList("ajouter cours", "nombre heure", "modifier cours et heure", "modifierCoursSalle","supprimerCours","listerCours", "menu principal"));
 
             switch (ch) {
                 case 1:
@@ -105,7 +109,13 @@ public class ClasseViewConsole extends ClasseAbstractView {
     private void rechercher() {
         System.out.println("id de la classe : ");
         int id_classe = sc.nextInt();
-        classeController.searchClasse(id_classe);
+        Classe cl = classeController.searchClasse(id_classe);
+        if (cl == null) affMsg("recherche infructueuse");
+        else {
+
+            special(cl);
+        }
+
     }
 
     private void retirer() {
@@ -119,14 +129,14 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void ajouter() {
         System.out.print("numéro du sigle : ");
-        String sigle = sc.nextLine();
+        String sigle = sc.next();
         System.out.print("Année : ");
         int annee = sc.nextInt();
         System.out.print("Specialité :");
-        String specialite = sc.nextLine();
+        String specialite = sc.next();
         System.out.print("Nombre d'élève : ");
         int nbreEleves = Integer.parseInt(sc.next());
-        Classe cla = classeController.addClasse(new Classe(0, sigle, annee, specialite, nbreEleves));
+        Classe cla = classeController.addClasse(new Classe(sigle, annee, specialite, nbreEleves));
         if (cla != null) affMsg("création de :" + cla);
         else affMsg("erreur de création");
     }
@@ -151,6 +161,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
     public void ajouterCours(Classe cl) {
+        //List<Cours> lc = GestEcole.com.getCours();
         System.out.println("Ajouter un cours");
         Cours cr = coursA.selectionner();
         System.out.println("Nombre d'heure du cours : ");

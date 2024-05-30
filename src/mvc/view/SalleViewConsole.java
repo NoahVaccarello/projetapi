@@ -1,5 +1,6 @@
 package mvc.view;
 
+import Ecole.metier.Classe;
 import Ecole.metier.Salle;
 
 import java.util.Arrays;
@@ -25,12 +26,12 @@ public class SalleViewConsole extends SalleAbstractView {
 
 
     public void menu(){
-        update(salleController.getAllSalle());
+        update(salleController.getAll());
         do{
             int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "fin"));
 
             switch(ch){
-                case 1: ajouter();
+                case 1: ajouterSalle();
                     break;
                 case 2 : retirer();
                     break;
@@ -43,9 +44,19 @@ public class SalleViewConsole extends SalleAbstractView {
         }while(true);
     }
 
+    /*private void ajouter() {
+        Classe cl = cl.selectionner();
+        ComFact cf = new ComFact();
+        cf.setClient(cl);
+        cf=comfactController.addComfact(cf);
+        if(cf!=null) affMsg("création de :"+cf);
+        else affMsg("erreur de création");
+    }*/
+
+
     private void modifier() {
-        int nl = choixElt(cl);
-        Salle salle = cl.get(nl-1);
+        int nl = choixElt(sl);
+        Salle salle = sl.get(nl-1);
         String sigle = modifyIfNotBlank("sigle de la salle", salle.getSigle());
         int capacite = parseInt(modifyIfNotBlank("capacite de la salle", "" + salle.getCapacite()));
         Salle sal =salleController.updateSalle(new Salle(salle.getIdSalle(), sigle, capacite));
@@ -56,21 +67,26 @@ public class SalleViewConsole extends SalleAbstractView {
     private void rechercher() {
         System.out.println("id de la salle : ");
         int idSalle = sc.nextInt();
-        salleController.searchSalle(idSalle);
-    }
+        Salle salle = salleController.searchSalle(idSalle);
+        if(salle==null) affMsg("recherche infructueuse");
+        else {
+            affMsg(salle.toString());
+            //special(salle);
+        }
 
+    }
     private void retirer() {
 
-        int nl = choixElt(cl);
-        Salle sal = cl.get(nl-1);
+        int nl = choixElt(sl);
+        Salle sal = sl.get(nl-1);
         boolean ok = salleController.removeSalle(sal);
         if(ok) affMsg("salle effacé");
         else affMsg("salle non effacé");
     }
 
-    private void ajouter() {
+    private void ajouterSalle() {
         System.out.print("sigle de la salle : ");
-        String sigle = sc.nextLine();
+        String sigle = sc.next();
         System.out.print("capacité de la salle: ");
         int capacite = sc.nextInt();
         Salle sal = salleController.addSalle(new Salle(0, sigle, capacite));
@@ -80,9 +96,9 @@ public class SalleViewConsole extends SalleAbstractView {
 
     @Override
     public Salle selectionner(){
-        update(salleController.getAllSalle());
-        int nl =  choixListe(cl);
-        Salle sal = cl.get(nl-1);
+        update(salleController.getAll());
+        int nl =  choixListe(sl);
+        Salle sal = sl.get(nl-1);
         return sal;
     }
 }

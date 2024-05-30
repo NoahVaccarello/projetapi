@@ -13,71 +13,62 @@ import java.util.List;
 
 public class GestEcole {
 
-    private DAOsalle sm;
-    private DAOcours com;
-    private DAOclasse cm;
-    private DAOenseignant em;
+    public DAOsalle daoSalle;
+    public static DAOcours daoCours;
+    public DAOclasse daoClasse;
+    public DAOenseignant daoEnseignant;
 
+    public CoursController coursController;
+    public SalleController salleController;
+    public ClasseController classeController;
+    public EnseignantController enseignantController;
 
-    private CoursController coc;
-    private SalleController sc;
-    private ClasseController cc;
-    private EnseignantController ec;
-
-
-    private CoursAbstractView cov;
-    private SalleAbstractView sv;
-    private ClasseAbstractView cv;
-    private EnseignantAbstractView ev;
+    public CoursAbstractView coursView;
+    public SalleAbstractView salleView;
+    public ClasseAbstractView classeView;
+    public EnseignantAbstractView enseignantView;
 
     public void gestion() {
+        salleView = new SalleViewConsole();
+        daoSalle = new ModelSalleDB();
+        salleController = new SalleController(daoSalle, salleView);
 
+        coursView = new CoursViewConsole(salleController);
+        daoCours = new ModelCoursDB(salleController);
+        coursController = new CoursController(daoCours, coursView);
 
-        sv = new SalleViewConsole();
-        sm = new ModelSalleDB();
-        sc = new SalleController(sm, sv);
+        classeView = new ClasseViewConsole();
+        daoClasse = new ModelClasseDB();
+        classeController = new ClasseController(daoClasse, classeView);
 
+        enseignantView = new EnseignantViewConsole();
+        daoEnseignant = new ModelEnseignantDB();
+        enseignantController = new EnseignantController(daoEnseignant, enseignantView);
 
-        cov = new CoursViewConsole(sc);
-        com = new ModelCoursDB(sc);
-        coc = new CoursController(com, cov);
+        classeView.setSalleView(salleView);
+        classeView.setCoursView(coursView);
+        classeView.setEnseignantView(enseignantView);
 
+        daoEnseignant.addObserver(enseignantView);
+        daoCours.addObserver(coursView);
+        daoClasse.addObserver(classeView);
+        daoSalle.addObserver(salleView);
 
-        cv = new ClasseViewConsole();
-        cm = new ModelClasseDB();
-        cc = new ClasseController(cm, cv);
-
-
-        ev = new EnseignantViewConsole();
-        em = new ModelEnseignantDB();
-        ec = new EnseignantController(em, ev);
-
-
-        cv.setSalleView(sv);
-        cv.setCoursView(cov);
-        cv.setEnseignantView(ev);
-
-
-        em.addObserver(ev);
-        com.addObserver(cov);
-        cm.addObserver(cv);
-        sm.addObserver(sv);
-
-        List<String> loptions = Arrays.asList("salles", "cours", "classes", "enseignants", "fin");
+        List<String> optionsMenu = Arrays.asList("Gestion des salles", "Gestion des cours", "Gestion des classes", "Gestion des enseignants", "Fin");
         do {
-            int ch = Utilitaire.choixListe(loptions);
-            switch (ch) {
+            int choix = Utilitaire.choixListe(optionsMenu);
+            switch (choix) {
                 case 1:
-                    sv.menu();
+                    salleView.menu();
                     break;
                 case 2:
-                    cov.menu();
+                    coursView.menu();
                     break;
                 case 3:
-                    cv.menu();
+                    classeView.menu();
                     break;
                 case 4:
-                    ev.menu();
+                    enseignantView.menu();
                     break;
                 case 5:
                     System.exit(0);
@@ -86,8 +77,8 @@ public class GestEcole {
     }
 
     public static void main(String[] args) {
-        GestEcole gestEcole = new GestEcole();
-        gestEcole.gestion();
+        GestEcole gestionEcole = new GestEcole();
+        gestionEcole.gestion();
     }
 
 }

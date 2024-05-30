@@ -306,9 +306,11 @@ public class ModelClasseDB extends DAOclasse{
     public List<ListeCoursEtHeures> coursEtHeures(Classe classe) {
         String query = "SELECT * FROM API2_INFOS WHERE id_classe = ?";
         String query2 = "SELECT * FROM API2_COURS WHERE id_cours = ?";
+        String query3 = "SELECT * FROM Salles WHERE id_salle = ?";
         List<ListeCoursEtHeures> listCH = new ArrayList<>();
         try (PreparedStatement pstm = dbConnect.prepareStatement(query);
-             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
+             PreparedStatement pstm3 = dbConnect.prepareStatement(query3)) {
             pstm.setInt(1, classe.getIdClasse());
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -320,18 +322,25 @@ public class ModelClasseDB extends DAOclasse{
                 if (rs2.next()) {
                     String matricule = rs2.getString(2);
                     String code = rs2.getString(3);
-                    String intitule = rs2.getString(4);
-                    int salle = rs2.getInt(5);
-                    //todo verifier la salle
-                     cours = new Cours(id_cours,matricule,code,salle);
+                    int id_salle = rs2.getInt(4);
+
+                    pstm3.setInt(1, id_salle);
+                    ResultSet rs3 = pstm3.executeQuery();
+                    Salle salle = null;
+                    if (rs3.next()) {
+                        String nomSalle = rs3.getString("nomSalle");
+                        int capacite = rs3.getInt("capacite");
+                        salle = new Salle(id_salle, nomSalle, capacite);
+                    }
+
+                    cours = new Cours(id_cours, matricule, code, salle);
                 }
-                ListeCoursEtHeures listCoHe = new ListeCoursEtHeures(cours,nbh);
+                ListeCoursEtHeures listCoHe = new ListeCoursEtHeures(cours, nbh);
                 listCH.add(listCoHe);
             }
             return listCH;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
-
+            System.err.println("erreur sql :" + e);
             return null;
         }
     }

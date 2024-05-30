@@ -10,7 +10,7 @@ public abstract class SalleAbstractView implements Observer {
 
     protected SalleController salleController;
 
-    protected List<Salle> cl;
+    protected List<Salle> sl;
 
     public void  setController(SalleController salleController){
         this.salleController=salleController;
@@ -24,9 +24,9 @@ public abstract class SalleAbstractView implements Observer {
     public abstract void affList(List l);
 
     @Override
-    public void update(List cl) {
-        this.cl = cl;
-        affList(cl);
+    public void update(List sl) {
+        this.sl = sl;
+        affList(sl);
     }
 
 }
