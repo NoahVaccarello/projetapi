@@ -70,8 +70,8 @@ public class CoursViewConsole extends CoursAbstractView {
 
     private void rechercher() {
         System.out.println("id du cours : ");
-        int id_classe = sc.nextInt();
-        coursController.searchCours(id_classe);
+        int id_cours = sc.nextInt();
+        coursController.searchCours(id_cours);
     }
 
     private void retirer() {
