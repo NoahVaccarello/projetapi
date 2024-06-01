@@ -13,9 +13,6 @@ import static utilitaires.Utilitaire.*;
 public class ClasseViewConsole extends ClasseAbstractView {
     private Scanner sc = new Scanner(System.in);
 
-    protected SalleViewConsole salleA;
-    protected CoursViewConsole coursA;
-    protected EnseignantViewConsole enseignantA;
     private DAOsalle daosalle;
 
     @Override
@@ -55,8 +52,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void special(Classe cl) {
         do {
-
-            int ch = choixListe(Arrays.asList("ajouter cours", "nombre heure", "modifier cours et heure", "modifierCoursSalle","supprimerCours","listerCours","listerEnsHeure","listerCoursHeure","ListerSalleHeure", "menu principal"));
+            int ch = choixListe(Arrays.asList("Ajouter cours", "Nombre d'heures", "Modifier cours et heure", "Modifier cours et salle", "modifier cours et enseignant", "Supprimer cours",  "Lister enseignants et heures", "Lister cours et heures", "Lister salles et heures", "Salle capacite","Fin"));
 
             switch (ch) {
                 case 1:
@@ -78,25 +74,25 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     supprimerCours(cl);
                     break;
                 case 7:
-                    listerCours(cl);
-                    break;
-                case 8:
                     listEnseignantEtHeures(cl);
                     break;
-                case 9:
+                case 8:
                     listCoursEtHeures(cl);
                     break;
-                case 10:
+                case 9:
                     listSalleetHeures(cl);
+                    break;
+                case 10:
+                    salleCapaciteOK(cl);
                     break;
                 case 11:
                     return;
                 default:
-                    System.out.println("choix invalide recommencez ");
+                    System.out.println("Choix invalide, recommencez.");
             }
         } while (true);
-
     }
+
 
 
     private void modifier() {
@@ -110,22 +106,6 @@ public class ClasseViewConsole extends ClasseAbstractView {
         if (clamaj == null) affMsg("mise à jour infrucueuse");
         else affMsg("mise à jour effectuée : " + clamaj);
     }
-
-    /*private void modifier() {
-        int nl = Utilitaire.choixElt(this.cl) - 1;
-        Classe classe = (Classe)this.cl.get(nl);
-        String sigle = Utilitaire.modifyIfNotBlank("sigle", classe.getSigle());
-        int annee = Integer.parseInt(Utilitaire.modifyIfNotBlank("annee", "" + classe.getAnnee()));
-        String specialite = Utilitaire.modifyIfNotBlank("specialite", classe.getSpecialite());
-        int nbreeleves = Integer.parseInt(Utilitaire.modifyIfNotBlank("nombre d'eleve", "" + classe.getNbreEleves()));
-        Classe cl = this.classeController.updateClasse(new Classe(classe.getIdClasse(), sigle, annee, specialite, nbreeleves));
-        if (cl == null) {
-            this.affMsg("mise à jour infructueuse");
-        } else {
-            this.affMsg("mise à jour effectuée : " + String.valueOf(cl));
-        }
-
-    }*/
 
     private void rechercher() {
         System.out.println("id de la classe : ");
@@ -176,16 +156,18 @@ public class ClasseViewConsole extends ClasseAbstractView {
         affMsg("heuretot: " + heuretot);
     }
 
-    public void salleCapaciteOK(Salle salle) {
+    public void salleCapaciteOK(Classe classe) {
 
-        //todo
-
+        boolean ok = classeController.salleCapacitOK(classe);
+        if (ok) System.out.println("La salle peut acceuillir la classe");
+        else System.out.println("La salle est trop petite");
     }
+
 
     public void ajouterCours(Classe cl) {
 
         System.out.println("Ajouter un cours");
-        Cours cr = coursA.selectionner();
+        Cours cr = courA.selectionner();
         System.out.println("Nombre d'heure du cours : ");
         int heure = sc.nextInt();
         boolean ok = classeController.addCours(cl, cr, heure);
@@ -195,7 +177,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void modifierCoursHeure(Classe cl) {
         System.out.println("Modifier un cours");
-        Cours cr = coursA.selectionner();
+        Cours cr = courA.selectionner();
         System.out.println("Nombre d'heure du cours : ");
         int heure = sc.nextInt();
         boolean ok = classeController.modifCours(cl, cr, heure);
@@ -206,7 +188,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void modifierCoursSalle(Classe cl) {
         System.out.println("Modifier un cours");
-        Cours cr = coursA.selectionner();
+        Cours cr = courA.selectionner();
         System.out.println("Numero de la salle : ");
         Salle salle = salleA.selectionner();
         boolean ok = classeController.modifCours(cl, cr, salle);
@@ -217,7 +199,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void modifierCoursEnseignant(Classe cl) {
         System.out.println("Modifier un cours");
-        Cours cr = coursA.selectionner();
+        Cours cr = courA.selectionner();
         System.out.println("Ensiegnant : ");
         Enseignant nom = enseignantA.selectionner();
         boolean ok = classeController.modifCours(cl, cr, nom);
@@ -228,17 +210,10 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void supprimerCours(Classe cl) {
         System.out.println("suppression d'un cours");
-        Cours cr = coursA.selectionner();
+        Cours cr = courA.selectionner();
         boolean ok = classeController.suppCours(cl, cr);
         if (ok) affMsg("cours supprimée");
         else affMsg("cours non supprimée");
-    }
-
-    private void listerCours(Classe cl) {
-        System.out.println("pCours");
-        List<Infos> listinfo = classeController.getCours(cl);
-        if(listinfo.isEmpty()) affMsg("aucune ligne pour cette commmande");
-        else affList(listinfo);
     }
 
     public void listEnseignantEtHeures(Classe cl) {

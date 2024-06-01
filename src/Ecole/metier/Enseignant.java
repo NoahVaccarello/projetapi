@@ -1,5 +1,6 @@
     package Ecole.metier;
 
+    import java.math.BigDecimal;
     import java.time.LocalDate;
 
     /**
@@ -193,7 +194,7 @@
             return dateEngag;
         }
 
-        public double getSalaireMensu() {
+        public Double getSalaireMensu() {
             return salaireMensu;
         }
 

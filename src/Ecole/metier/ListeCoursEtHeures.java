@@ -73,4 +73,13 @@ public class ListeCoursEtHeures {
     public int hashCode() {
         return Objects.hash(cours, nbreHeures);
     }
+
+    @Override
+    public String toString() {
+        return "ListeCoursEtHeures{" +
+                "cours=" + cours +
+                ", nbreHeures=" + nbreHeures +
+                '}';
+    }
 }
+

@@ -44,4 +44,12 @@ public class EnseignantEtHeures {
     public void setHeures(int heures) {
         this.heures = heures;
     }
+
+    @Override
+    public String toString() {
+        return "EnseignantEtHeures{" +
+                "enseignant=" + enseignant +
+                ", heures=" + heures +
+                '}';
+    }
 }

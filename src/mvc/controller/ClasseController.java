@@ -54,8 +54,8 @@ public class ClasseController {
         return model.salleetHeures(classe);
     }
 
-    public boolean salleCapacitOK(Salle salle) {
-        return model.salleCapacitOK(salle);
+    public boolean salleCapacitOK(Classe classe) {
+        return model.salleCapacitOK(classe);
     }
 
     public boolean addCours(Classe classe, Cours cours, int nbrheure) {
@@ -78,10 +78,6 @@ public class ClasseController {
     public boolean suppCours(Classe classe, Cours cours) {
         return model.suppCours(classe, cours);
     }
-    public List<Infos> getCours(Classe classe) {
-        return model.getCours(classe);
-    }
-
 
 }
 

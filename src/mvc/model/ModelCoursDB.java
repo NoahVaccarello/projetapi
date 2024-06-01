@@ -13,13 +13,13 @@ public class ModelCoursDB extends DAOcours {
     protected Connection dbConnect;
     private DAOsalle daoSalle;
 
-    public ModelCoursDB(DAOsalle daoSalle) {
+    public ModelCoursDB() {
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.err.println("erreur de connexion");
             System.exit(1);
         }
-        this.daoSalle = daoSalle;
+        daoSalle = new ModelSalleDB();
     }
 
     @Override

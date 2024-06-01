@@ -31,7 +31,7 @@ public class GestEcole {
         sm = new ModelSalleDB();  // Initialisation de DAO salle
 
         // Passe DAOsalle à ModelCoursDB
-        com = new ModelCoursDB(sm);
+        com = new ModelCoursDB();
 
         em = new ModelEnseignantDB();
 
@@ -46,6 +46,11 @@ public class GestEcole {
         coc = new CoursController(com, cov);
         ec = new EnseignantController(em, ev);
         sc = new SalleController(sm, sv);
+
+        cv.setCoursView(cov);
+        cv.setEnseignantView(ev);
+        cv.setSalleView(sv);
+
 
         // Ajout des observateurs
         clm.addObserver(cv);

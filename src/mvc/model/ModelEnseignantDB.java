@@ -26,7 +26,7 @@ public class ModelEnseignantDB extends DAOenseignant{
     @Override
     public Enseignant addEnseignant (Enseignant enseignant) {
         String query1 = "insert into API2_ENSEIGNANT(MATRICULE,NOM,PRENOM,TEL,CHARGESEM,SALAIREMENSU,DATEENGAG) values(?,?,?,?,?,?,?)";
-        String query2 = "select ID_ENSEIGNANT from API2_CLASSE where MATRICULE= ?";
+        String query2 = "select ID_ENSEIGNANT from API2_CLASSE where MATRICULE=? and NOM =? and PRENOM =?";
         try(PreparedStatement pstm1= dbConnect.prepareStatement(query1);
             PreparedStatement pstm2= dbConnect.prepareStatement(query2);
         ){
@@ -42,6 +42,8 @@ public class ModelEnseignantDB extends DAOenseignant{
             int n = pstm1.executeUpdate();
             if(n==1){
                 pstm2.setInt(1,enseignant.getIdEnseignant());
+                pstm2.setString(2,enseignant.getNom());
+                pstm2.setString(3,enseignant.getPrenom());
                 ResultSet rs= pstm2.executeQuery();
                 if(rs.next()){
                     int idEnseignant= rs.getInt(1);
@@ -91,7 +93,10 @@ public class ModelEnseignantDB extends DAOenseignant{
             pstm.setString(4,enseignant.getTel());
             pstm.setInt(5,enseignant.getChargeSem());
             pstm.setDouble(6,enseignant.getSalaireMensu());
-            pstm.setDate(7, Date.valueOf(enseignant.getDateEngag())); // j'ai refais pareil que dans la methode addEnseignant
+            LocalDate date = enseignant.getDateEngag();
+            java.sql.Date datee = java.sql.Date.valueOf(date);
+            pstm.setDate(7, datee); // j'ai refais pareil que dans la methode addEnseignant
+            pstm.setInt(8,enseignant.getIdEnseignant());
             int n = pstm.executeUpdate();
             notifyObservers();
             if(n!=0) return readEnseignant(enseignant.getIdEnseignant());
