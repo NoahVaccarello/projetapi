@@ -15,7 +15,7 @@ public abstract class DAOsalle extends Subject {
 
     public abstract Salle searchSalle(Salle salle);
 
-    public abstract Salle readSalle(int idSalle);
+    public abstract Salle readSalle(int id_Salle);
 
     public abstract List<Salle> getSalle();
 }

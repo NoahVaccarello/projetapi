@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class CoursAbstractView implements Observer {
 
     protected CoursController coursController;
-    protected List<Cours> cl;
+    protected List<Cours> co;
 
     public void setController(CoursController coursController) {
         this.coursController = coursController;
@@ -21,12 +21,12 @@ public abstract class CoursAbstractView implements Observer {
 
     public abstract void menu();
 
-    public abstract void affList(List l);
+    public abstract void affListC(List co);
 
     @Override
-    public void update(List cl) {
-        this.cl = cl;
-        affList(cl);
+    public void update(List co) {
+        this.co = co;
+        affListC(co);
     }
 
 }

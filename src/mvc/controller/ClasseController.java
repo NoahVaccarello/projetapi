@@ -41,16 +41,16 @@ public class ClasseController {
         return model.nbrHeuresTot(classe);
     }
 
-    public List<EnseignantEtHeures> enseignantEtHeures(Classe classe) {
+    public List<EnseignantEtHeures> listEnseignantEtHeures(Classe classe) {
         return model.enseignantEtHeures(classe);
     }
 
 
-    public List<ListeCoursEtHeures> coursEtHeures(Classe classe) {
+    public List<ListeCoursEtHeures> listCoursEtHeures(Classe classe) {
         return model.coursEtHeures(classe);
     }
 
-    public List<ListeSalleetHeures> salleetHeures(Classe classe) {
+    public List<ListeSalleetHeures> listSalleetHeures(Classe classe) {
         return model.salleetHeures(classe);
     }
 

@@ -1,6 +1,7 @@
 package mvc.view;
 
 import Ecole.metier.Classe;
+import Ecole.metier.Cours;
 import Ecole.metier.Salle;
 
 import java.util.Arrays;
@@ -44,17 +45,20 @@ public class SalleViewConsole extends SalleAbstractView {
         }while(true);
     }
 
-    /*private void ajouter() {
-        Classe cl = cl.selectionner();
-        ComFact cf = new ComFact();
-        cf.setClient(cl);
-        cf=comfactController.addComfact(cf);
-        if(cf!=null) affMsg("création de :"+cf);
-        else affMsg("erreur de création");
-    }*/
-
+    private void afficherListeSalle() {
+        List<Salle> salle = salleController.getAll();
+        if (salle != null && !salle.isEmpty()) {
+            System.out.println("Liste des salles : ");
+            for (Salle s : salle) {
+                System.out.println(s.toString());
+            }
+        } else {
+            System.out.println("Aucun cours trouvé.");
+        }
+    }
 
     private void modifier() {
+        afficherListeSalle();
         int nl = choixElt(sl);
         Salle salle = sl.get(nl-1);
         String sigle = modifyIfNotBlank("sigle de la salle", salle.getSigle());
@@ -65,18 +69,19 @@ public class SalleViewConsole extends SalleAbstractView {
     }
 
     private void rechercher() {
+        afficherListeSalle();
         System.out.println("id de la salle : ");
         int idSalle = sc.nextInt();
         Salle salle = salleController.searchSalle(idSalle);
         if(salle==null) affMsg("recherche infructueuse");
         else {
             affMsg(salle.toString());
-            //special(salle);
         }
 
     }
     private void retirer() {
 
+        afficherListeSalle();
         int nl = choixElt(sl);
         Salle sal = sl.get(nl-1);
         boolean ok = salleController.removeSalle(sal);

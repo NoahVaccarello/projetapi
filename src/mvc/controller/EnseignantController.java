@@ -1,40 +1,42 @@
 package mvc.controller;
 
-import Ecole.metier.Enseignant;
+import Ecole.metier.*;
+import mvc.model.DAOclasse;
 import mvc.model.DAOenseignant;
+import mvc.view.ClasseAbstractView;
 import mvc.view.EnseignantAbstractView;
 
 import java.util.List;
 
 public class EnseignantController {
-
     private DAOenseignant model;
     private EnseignantAbstractView view;
 
     public EnseignantController(DAOenseignant model, EnseignantAbstractView view) {
         this.model = model;
         this.view = view;
+        this.view.setController(this);
     }
 
     public List<Enseignant> getAll() {
         return model.getEnseignant();
     }
 
-    public Enseignant addEnseignant(Enseignant cours) {
-        return model.addEnseignant(cours);
+    public Enseignant addEnseignant(Enseignant enseignant) {
+        return model.addEnseignant(enseignant);
     }
 
-    public boolean removeEnseignant(Enseignant cours) {
-        return model.removeEnseignant(cours);
+    public boolean removeEnseignant(Enseignant enseignant) {
+        return model.removeEnseignant(enseignant);
     }
 
-    public Enseignant updateEnseignant(Enseignant cours) {
-        return model.updateEnseignant(cours);
+    public Enseignant updateEnseignant(Enseignant enseignant) {
+        return model.updateEnseignant(enseignant);
     }
 
-    public Enseignant searchEnseignant(int id_cours) {
-        return model.readEnseignant(id_cours);
+    public Enseignant searchEnseignant(int id_enseignant) {
+        return model.readEnseignant(id_enseignant);
     }
-
 
 }
+

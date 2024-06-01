@@ -112,4 +112,14 @@ public class Salle {
     public void setCours(List<Ecole.metier.Cours> cours) {
         Cours = cours;
     }
+
+    @Override
+    public String toString() {
+        return "Salle{" +
+                "idSalle=" + idSalle +
+                ", sigle='" + sigle + '\'' +
+                ", capacite=" + capacite +
+                ", Cours=" + Cours +
+                '}';
+    }
 }

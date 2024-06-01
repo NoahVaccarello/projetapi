@@ -12,63 +12,63 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GestEcole {
-
-    public DAOsalle daoSalle;
-    public static DAOcours daoCours;
-    public DAOclasse daoClasse;
-    public DAOenseignant daoEnseignant;
-
-    public CoursController coursController;
-    public SalleController salleController;
-    public ClasseController classeController;
-    public EnseignantController enseignantController;
-
-    public CoursAbstractView coursView;
-    public SalleAbstractView salleView;
-    public ClasseAbstractView classeView;
-    public EnseignantAbstractView enseignantView;
+    private DAOclasse clm;
+    private DAOcours com;
+    private DAOenseignant em;
+    private DAOsalle sm;
+    private ClasseController cc;
+    private CoursController coc;
+    private EnseignantController ec;
+    private SalleController sc;
+    private ClasseAbstractView cv;
+    private CoursAbstractView cov;
+    private EnseignantAbstractView ev;
+    private SalleAbstractView sv;
 
     public void gestion() {
-        salleView = new SalleViewConsole();
-        daoSalle = new ModelSalleDB();
-        salleController = new SalleController(daoSalle, salleView);
+        // Initialisation des modèles
+        clm = new ModelClasseDB();
+        sm = new ModelSalleDB();  // Initialisation de DAO salle
 
-        coursView = new CoursViewConsole(salleController);
-        daoCours = new ModelCoursDB(salleController);
-        coursController = new CoursController(daoCours, coursView);
+        // Passe DAOsalle à ModelCoursDB
+        com = new ModelCoursDB(sm);
 
-        classeView = new ClasseViewConsole();
-        daoClasse = new ModelClasseDB();
-        classeController = new ClasseController(daoClasse, classeView);
+        em = new ModelEnseignantDB();
 
-        enseignantView = new EnseignantViewConsole();
-        daoEnseignant = new ModelEnseignantDB();
-        enseignantController = new EnseignantController(daoEnseignant, enseignantView);
+        // Initialisation des vues
+        cv = new ClasseViewConsole();
+        cov = new CoursViewConsole();
+        ev = new EnseignantViewConsole();
+        sv = new SalleViewConsole();
 
-        classeView.setSalleView(salleView);
-        classeView.setCoursView(coursView);
-        classeView.setEnseignantView(enseignantView);
+        // Initialisation des contrôleurs
+        cc = new ClasseController(clm, cv);  // création et injection de dépendance
+        coc = new CoursController(com, cov);
+        ec = new EnseignantController(em, ev);
+        sc = new SalleController(sm, sv);
 
-        daoEnseignant.addObserver(enseignantView);
-        daoCours.addObserver(coursView);
-        daoClasse.addObserver(classeView);
-        daoSalle.addObserver(salleView);
+        // Ajout des observateurs
+        clm.addObserver(cv);
+        com.addObserver(cov);
+        em.addObserver(ev);
+        sm.addObserver(sv);
 
-        List<String> optionsMenu = Arrays.asList("Gestion des salles", "Gestion des cours", "Gestion des classes", "Gestion des enseignants", "Fin");
+        // Menu principal
+        List<String> loptions = Arrays.asList("classe", "cours", "enseignant", "salle", "fin");
         do {
-            int choix = Utilitaire.choixListe(optionsMenu);
-            switch (choix) {
+            int ch = Utilitaire.choixListe(loptions);
+            switch (ch) {
                 case 1:
-                    salleView.menu();
+                    cv.menu();
                     break;
                 case 2:
-                    coursView.menu();
+                    cov.menu();
                     break;
                 case 3:
-                    classeView.menu();
+                    ev.menu();
                     break;
                 case 4:
-                    enseignantView.menu();
+                    sv.menu();
                     break;
                 case 5:
                     System.exit(0);
@@ -77,8 +77,7 @@ public class GestEcole {
     }
 
     public static void main(String[] args) {
-        GestEcole gestionEcole = new GestEcole();
-        gestionEcole.gestion();
+        GestEcole ge = new GestEcole();
+        ge.gestion();
     }
-
 }

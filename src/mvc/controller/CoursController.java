@@ -1,6 +1,6 @@
 package mvc.controller;
 
-import Ecole.metier.Cours;
+import Ecole.metier.*;
 import mvc.model.DAOcours;
 import mvc.view.CoursAbstractView;
 
@@ -13,6 +13,7 @@ public class CoursController {
     public CoursController(DAOcours model, CoursAbstractView view) {
         this.model = model;
         this.view = view;
+        this.view.setController(this);
     }
 
     public List<Cours> getAll() {
@@ -34,5 +35,7 @@ public class CoursController {
     public Cours searchCours(int id_cours) {
         return model.readCours(id_cours);
     }
+
+
 }
 

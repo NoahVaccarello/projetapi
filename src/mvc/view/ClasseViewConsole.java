@@ -1,7 +1,8 @@
 package mvc.view;
 
 import Ecole.metier.*;
-import mvc.GestEcole;
+import mvc.model.DAOsalle;
+import utilitaires.Utilitaire;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,10 @@ import static utilitaires.Utilitaire.*;
 public class ClasseViewConsole extends ClasseAbstractView {
     private Scanner sc = new Scanner(System.in);
 
+    protected SalleViewConsole salleA;
+    protected CoursViewConsole coursA;
+    protected EnseignantViewConsole enseignantA;
+    private DAOsalle daosalle;
 
     @Override
     public void affMsg(String msg) {
@@ -51,9 +56,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     private void special(Classe cl) {
         do {
 
-            affMsg(" Classe " + cl.toString());
-
-            int ch = choixListe(Arrays.asList("ajouter cours", "nombre heure", "modifier cours et heure", "modifierCoursSalle","supprimerCours","listerCours", "menu principal"));
+            int ch = choixListe(Arrays.asList("ajouter cours", "nombre heure", "modifier cours et heure", "modifierCoursSalle","supprimerCours","listerCours","listerEnsHeure","listerCoursHeure","ListerSalleHeure", "menu principal"));
 
             switch (ch) {
                 case 1:
@@ -78,12 +81,15 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     listerCours(cl);
                     break;
                 case 8:
-                   //supprimerCours(cl);
+                    listEnseignantEtHeures(cl);
                     break;
                 case 9:
-                    //supprimerCours(cl);
+                    listCoursEtHeures(cl);
                     break;
                 case 10:
+                    listSalleetHeures(cl);
+                    break;
+                case 11:
                     return;
                 default:
                     System.out.println("choix invalide recommencez ");
@@ -94,7 +100,6 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
 
     private void modifier() {
-
         int nl = choixElt(cl);
         Classe cla = cl.get(nl - 1);
         String sigle = modifyIfNotBlank("numéro du sigle", cla.getSigle());
@@ -106,6 +111,22 @@ public class ClasseViewConsole extends ClasseAbstractView {
         else affMsg("mise à jour effectuée : " + clamaj);
     }
 
+    /*private void modifier() {
+        int nl = Utilitaire.choixElt(this.cl) - 1;
+        Classe classe = (Classe)this.cl.get(nl);
+        String sigle = Utilitaire.modifyIfNotBlank("sigle", classe.getSigle());
+        int annee = Integer.parseInt(Utilitaire.modifyIfNotBlank("annee", "" + classe.getAnnee()));
+        String specialite = Utilitaire.modifyIfNotBlank("specialite", classe.getSpecialite());
+        int nbreeleves = Integer.parseInt(Utilitaire.modifyIfNotBlank("nombre d'eleve", "" + classe.getNbreEleves()));
+        Classe cl = this.classeController.updateClasse(new Classe(classe.getIdClasse(), sigle, annee, specialite, nbreeleves));
+        if (cl == null) {
+            this.affMsg("mise à jour infructueuse");
+        } else {
+            this.affMsg("mise à jour effectuée : " + String.valueOf(cl));
+        }
+
+    }*/
+
     private void rechercher() {
         System.out.println("id de la classe : ");
         int id_classe = sc.nextInt();
@@ -113,6 +134,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
         if (cl == null) affMsg("recherche infructueuse");
         else {
 
+            affMsg(cl.toString());
             special(cl);
         }
 
@@ -136,7 +158,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
         String specialite = sc.next();
         System.out.print("Nombre d'élève : ");
         int nbreEleves = Integer.parseInt(sc.next());
-        Classe cla = classeController.addClasse(new Classe(sigle, annee, specialite, nbreEleves));
+        Classe cla = classeController.addClasse(new Classe(0,sigle, annee, specialite, nbreEleves));
         if (cla != null) affMsg("création de :" + cla);
         else affMsg("erreur de création");
     }
@@ -161,7 +183,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
     public void ajouterCours(Classe cl) {
-        //List<Cours> lc = GestEcole.com.getCours();
+
         System.out.println("Ajouter un cours");
         Cours cr = coursA.selectionner();
         System.out.println("Nombre d'heure du cours : ");
@@ -218,6 +240,37 @@ public class ClasseViewConsole extends ClasseAbstractView {
         if(listinfo.isEmpty()) affMsg("aucune ligne pour cette commmande");
         else affList(listinfo);
     }
+
+    public void listEnseignantEtHeures(Classe cl) {
+        List<EnseignantEtHeures> listEH = classeController.listEnseignantEtHeures(cl);
+        if (listEH.isEmpty()) {
+            System.out.println("La liste est vide");
+        } else {
+            System.out.println(listEH);
+        }
+    }
+
+    public void listCoursEtHeures(Classe cl) {
+        List<ListeCoursEtHeures> listCH = classeController.listCoursEtHeures(cl);
+        if (listCH.isEmpty()) {
+            System.out.println("La liste est vide");
+        }
+        else {
+            affList(listCH);
+        }
+    }
+
+    public void listSalleetHeures(Classe cl) {
+        List<ListeSalleetHeures> listSH = classeController.listSalleetHeures(cl);
+        if (listSH.isEmpty()) {
+            System.out.println("La liste est vide");
+        }
+        else {
+            affList(listSH);
+        }
+    }
+
+
 
 }
 

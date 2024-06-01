@@ -1,78 +1,66 @@
 package mvc.model;
 
-
 import Ecole.metier.Cours;
 import Ecole.metier.Salle;
-import mvc.controller.SalleController;
 import myconnections.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ModelCoursDB extends DAOcours{
+public class ModelCoursDB extends DAOcours {
 
     protected Connection dbConnect;
-    protected SalleController salleController;
+    private DAOsalle daoSalle;
 
-    public ModelCoursDB(SalleController salleController) {
-        this.salleController = salleController;
+    public ModelCoursDB(DAOsalle daoSalle) {
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.err.println("erreur de connexion");
             System.exit(1);
         }
+        this.daoSalle = daoSalle;
     }
 
     @Override
-    public Cours addCours (Cours cours) {
-        String query1 = "insert into API2_COURS(code, intitule, salle) values(?,?,?)";
+    public Cours addCours(Cours cours) {
+        String query1 = "insert into API2_COURS(code, intitule,id_salle) values(?,?,?)";
         String query2 = "select id_cours from API2_COURS where code= ?";
-        try(PreparedStatement pstm1= dbConnect.prepareStatement(query1);
-            PreparedStatement pstm2= dbConnect.prepareStatement(query2);
-        ){
-            pstm1.setString(1,cours.getCode());
-            pstm1.setString(2,cours.getIntutle());
-            pstm1.setInt(3,cours.getSalleParDefaut().getIdSalle());
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+            pstm1.setString(1, cours.getCode());
+            pstm1.setString(2, cours.getIntitule());
+            pstm1.setInt(3, cours.getSalleParDefaut().getIdSalle());
             int n = pstm1.executeUpdate();
-            if(n==1){
-                pstm2.setInt(1,cours.getId_cours());
-                ResultSet rs= pstm2.executeQuery();
-                if(rs.next()){
-                    int idcours= rs.getInt(1);
+            if (n == 1) {
+                pstm2.setString(1, cours.getCode());
+                ResultSet rs = pstm2.executeQuery();
+                if (rs.next()) {
+                    int idcours = rs.getInt(1);
                     cours.setId_cours(idcours);
                     notifyObservers();
                     return cours;
-                }
-                else {
-
+                } else {
                     System.err.println("record introuvable");
                     return null;
                 }
-            }
-            else return null;
-
+            } else return null;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
-
+            System.err.println("erreur sql :" + e);
             return null;
         }
     }
 
     @Override
     public boolean removeCours(Cours cours) {
-        String query = "delete from API2_CLASSE where id_cours = ?";
-        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1,cours.getId_cours());
+        String query = "delete from API2_COURS where ID_COURS = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, cours.getId_cours());
             int n = pstm.executeUpdate();
             notifyObservers();
-            if(n!=0) return true;
-            else return false;
-
+            return n != 0;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
-
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -80,18 +68,15 @@ public class ModelCoursDB extends DAOcours{
     @Override
     public Cours updateCours(Cours cours) {
         String query = "update API2_COURS set code =?,intitule=?,id_salle=?";
-        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1,cours.getCode());
-            pstm.setString(2,cours.getIntutle());
-            pstm.setInt(3,cours.getSalleParDefaut().getIdSalle());
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1, cours.getCode());
+            pstm.setString(2, cours.getIntitule());
+            pstm.setInt(3, cours.getSalleParDefaut().getIdSalle());
             int n = pstm.executeUpdate();
             notifyObservers();
-            if(n!=0) return readCours(cours.getId_cours());
-            else return null;
-
+            return n != 0 ? readCours(cours.getId_cours()) : null;
         } catch (SQLException e) {
             System.err.println("erreur sql :" + e);
-
             return null;
         }
     }
@@ -99,24 +84,20 @@ public class ModelCoursDB extends DAOcours{
     @Override
     public Cours readCours(int id_cours) {
         String query = "select * from API2_COURS where id_cours = ?";
-        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1,id_cours);
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, id_cours);
             ResultSet rs = pstm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String code = rs.getString(2);
                 String intitule = rs.getString(3);
                 int id_salle = rs.getInt(4);
-                Salle salleParDefaut= salleController.searchSalle(id_salle); // code provenant d'audry car j'avais du mal avec la salle
-                Cours c = new Cours(id_cours,code,intitule,salleParDefaut);
-                return c;
-
-            }
-            else {
+                Salle salleParDefaut = daoSalle.readSalle(id_salle);
+                return new Cours(id_cours, code, intitule, salleParDefaut);
+            } else {
                 return null;
             }
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
-
+            System.err.println("erreur sql :" + e);
             return null;
         }
     }
@@ -124,22 +105,21 @@ public class ModelCoursDB extends DAOcours{
     @Override
     public List<Cours> getCours() {
         List<Cours> lp = new ArrayList<>();
-        String query="select * from API2_COURS";
-        try(Statement stm = dbConnect.createStatement()) {
+        String query = "select * from API2_COURS";
+        try (Statement stm = dbConnect.createStatement()) {
             ResultSet rs = stm.executeQuery(query);
-            while(rs.next()){
+            while (rs.next()) {
                 int id_cours = rs.getInt(1);
                 String code = rs.getString(2);
                 String intitule = rs.getString(3);
                 int id_salle = rs.getInt(4);
-                Salle salleParDefaut= salleController.searchSalle(id_salle);
+                Salle salleParDefaut = daoSalle.readSalle(id_salle);
                 Cours c = new Cours(id_cours, code, intitule, salleParDefaut);
                 lp.add(c);
             }
             return lp;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
-
+            System.err.println("erreur sql :" + e);
             return null;
         }
     }

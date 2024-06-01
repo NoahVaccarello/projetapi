@@ -19,6 +19,11 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
     }
 
     @Override
+    public void affList(List l) {
+
+    }
+
+    @Override
     public void menu() {
         update(enseignantController.getAll());
         do {
@@ -43,11 +48,6 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         } while (true);
     }
 
-    @Override
-    public void affList(List l) {
-
-    }
-
     private void modifier() {
         int nl = choixElt(cl);
         Enseignant enseignant = cl.get(nl);
@@ -57,7 +57,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         String tel = modifyIfNotBlank("tel", enseignant.getTel());
         int chargeSem = parseInt(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
         double salaireMensu = Double.parseDouble(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
-        String date = modifyIfNotBlank("date de fin :", enseignant.getDateEngag() + "");
+        String date = modifyIfNotBlank("date d'engagement :", enseignant.getDateEngag() + "");
         LocalDate dateengag = !date.equals("null") ? LocalDate.parse(date) : null;
         Enseignant ens =enseignantController.updateEnseignant(new Enseignant(enseignant.getIdEnseignant(), matricule, nom, prenom, tel, chargeSem, salaireMensu, dateengag));
         if(ens==null) affMsg("mise à jour infructueuse");

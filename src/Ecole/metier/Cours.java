@@ -23,7 +23,7 @@ public class Cours {
     /**
      * L'intitulé du cours.
      */
-    protected String intutle;
+    protected String intitule;
 
     /**
      * salle du cours
@@ -46,14 +46,14 @@ public class Cours {
     public Cours(int id ,String code, String intutle, Salle salleParDefaut) {
         this.id_cours= id++;
         this.code = code;
-        this.intutle = intutle;
+        this.intitule = intutle;
         this.salleParDefaut = salleParDefaut;
     }
 
     public Cours(int id_cours, String code, String intitule) {
         this.id_cours = id_cours;
         this.code = code;
-        this.intutle = intitule;
+        this.intitule = intitule;
     }
 
 
@@ -79,16 +79,16 @@ public class Cours {
      * getter intitulé du cours.
      * @return intitulé du cours.
      */
-    public String getIntutle() {
-        return intutle;
+    public String getIntitule() {
+        return intitule;
     }
 
     /**
      * setter intitulé du cours.
      * @param intutle intitulé du cours
      */
-    public void setIntutle(String intutle) {
-        this.intutle = intutle;
+    public void setIntitule(String intutle) {
+        this.intitule = intutle;
     }
 
     /**
@@ -122,5 +122,15 @@ public class Cours {
      */
     public void setId_cours(int id_cours) {
         this.id_cours = id_cours;
+    }
+
+    @Override
+    public String toString() {
+        return "Cours{" +
+                "id_cours=" + id_cours +
+                ", code='" + code + '\'' +
+                ", intitule='" + intitule + '\'' +
+                ", salleParDefaut=" + salleParDefaut +
+                '}';
     }
 }

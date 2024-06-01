@@ -12,7 +12,7 @@ public abstract class DAOcours extends Subject {
 
     public abstract Cours updateCours(Cours cours);
 
-    public abstract Cours readCours(int cours);
+    public abstract Cours readCours(int id_cours);
 
     public abstract List<Cours> getCours();
 }

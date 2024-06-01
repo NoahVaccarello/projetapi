@@ -76,7 +76,7 @@ public class ModelSalleDB extends DAOsalle{
 
     @Override
     public Salle updateSalle(Salle salle) {
-        String query = "update API2_SALLE set sigle =?,capacite=?where id_salle = ?";
+        String query = "update API2_SALLE set sigle =?,capacite=? where id_salle = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, salle.getSigle());
             pstm.setInt(2,salle.getCapacite());

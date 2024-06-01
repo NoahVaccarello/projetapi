@@ -25,8 +25,8 @@ public class ModelEnseignantDB extends DAOenseignant{
 
     @Override
     public Enseignant addEnseignant (Enseignant enseignant) {
-        String query1 = "insert into API2_ENSEIGNANT(matricule,nom,prenom,tel,chargesem,salairemenu,dateengag) values(?,?,?,?,?,?,?)";
-        String query2 = "select id_enseignant from API2_CLASSE where matricule= ?";
+        String query1 = "insert into API2_ENSEIGNANT(MATRICULE,NOM,PRENOM,TEL,CHARGESEM,SALAIREMENSU,DATEENGAG) values(?,?,?,?,?,?,?)";
+        String query2 = "select ID_ENSEIGNANT from API2_CLASSE where MATRICULE= ?";
         try(PreparedStatement pstm1= dbConnect.prepareStatement(query1);
             PreparedStatement pstm2= dbConnect.prepareStatement(query2);
         ){
@@ -36,8 +36,7 @@ public class ModelEnseignantDB extends DAOenseignant{
             pstm1.setString(4,enseignant.getTel());
             pstm1.setInt(5,enseignant.getChargeSem());
             pstm1.setDouble(6,enseignant.getSalaireMensu());
-            LocalDate d1 = enseignant.getDateEngag();
-            pstm1.setDate(7, Date.valueOf(d1)); //intelij m'a proposé cela comme solution car
+            pstm1.setDate(7, Date.valueOf(enseignant.getDateEngag()));//intelij m'a proposé cela comme solution car
             // si je mettais uniqement (7,d1) cela ne fonctionnais pas et je ne trouvais pas de solution
 
             int n = pstm1.executeUpdate();
@@ -67,7 +66,7 @@ public class ModelEnseignantDB extends DAOenseignant{
 
     @Override
     public boolean removeEnseignant(Enseignant enseignant) {
-        String query = "delete from API2_ENSEIGNANT where id_enseignant = ?";
+        String query = "delete from API2_ENSEIGNANT where ID_ENSEIGNANT = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,enseignant.getIdEnseignant());
             int n = pstm.executeUpdate();
@@ -84,7 +83,7 @@ public class ModelEnseignantDB extends DAOenseignant{
 
     @Override
     public Enseignant updateEnseignant(Enseignant enseignant) {
-        String query = "update API2_ENSEIGNANT set matricule =?,nom=?,prenom=?, tel=?, chargesem=?, salairemensu = ?, dateengag= ? where id_enseignant = ?";
+        String query = "update API2_ENSEIGNANT set MATRICULE =?,NOM=?,PRENOM=?, TEL=?, CHARGESEM=?, SALAIREMENSU = ?, DATEENGAG= ? where ID_ENSEIGNANT = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, enseignant.getMatricule());
             pstm.setString(2,enseignant.getNom());
@@ -92,8 +91,7 @@ public class ModelEnseignantDB extends DAOenseignant{
             pstm.setString(4,enseignant.getTel());
             pstm.setInt(5,enseignant.getChargeSem());
             pstm.setDouble(6,enseignant.getSalaireMensu());
-            LocalDate d1 = enseignant.getDateEngag();
-            pstm.setDate(7, Date.valueOf(d1)); // j'ai refais pareil que dans la methode addEnseignant
+            pstm.setDate(7, Date.valueOf(enseignant.getDateEngag())); // j'ai refais pareil que dans la methode addEnseignant
             int n = pstm.executeUpdate();
             notifyObservers();
             if(n!=0) return readEnseignant(enseignant.getIdEnseignant());
@@ -108,7 +106,7 @@ public class ModelEnseignantDB extends DAOenseignant{
 
     @Override
     public Enseignant readEnseignant (int id_enseignant) {
-        String query = "select * from API2_ENSEIGNANT where id_enseignant = ?";
+        String query = "select * from API2_ENSEIGNANT where ID_ENSEIGNANT = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,id_enseignant);
             ResultSet rs = pstm.executeQuery();
@@ -119,7 +117,7 @@ public class ModelEnseignantDB extends DAOenseignant{
                 String tel = rs.getString(5);
                 int chargesem = rs.getInt(6);
                 double salairemensu = rs.getDouble(7);
-                LocalDate dateengag = rs.getDate(8).toLocalDate(); // j'ai eu bcp de complication avec localDta j'ai donc fais une demande sur chatGPT
+                LocalDate dateengag = rs.getDate(8).toLocalDate(); // j'ai eu bcp de complication avec localDate j'ai donc fais une demande sur chatGPT
                 Enseignant e = new Enseignant(id_enseignant, matricule, nom, prenom, tel, chargesem, salairemensu, dateengag);
                 return e;
 
@@ -149,8 +147,8 @@ public class ModelEnseignantDB extends DAOenseignant{
                 int chargeSem = rs.getInt(6);
                 double salairemensu = rs.getDouble(7);
                 LocalDate dateengag = rs.getDate(8).toLocalDate();
-                Enseignant ens = new Enseignant(id_enseignant, matricule, nom, prenom, tel, chargeSem, salairemensu, dateengag);
-                es.add(ens);
+                Enseignant e = new Enseignant(id_enseignant, matricule, nom, prenom, tel, chargeSem, salairemensu, dateengag);
+                es.add(e);
             }
             return es;
         } catch (SQLException e) {

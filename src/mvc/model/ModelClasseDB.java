@@ -26,19 +26,18 @@ public class ModelClasseDB extends DAOclasse{
 
     @Override
     public Classe addClasse (Classe classe) {
-        String query1 = "insert into API2_CLASSE(sigle,annee,specialite,nbreEleves) values(?,?,?,?)";
-        String query2 = "select id_classe from API2_CLASSE where sigle= ?";
+        String query1 = "insert into API2_CLASSE(SIGLE,ANNEE,SPECIALITE,NBREELEVES) values(?,?,?,?)";
+        String query2 = "select ID_CLASSE from API2_CLASSE where SIGLE= ?";
         try(PreparedStatement pstm1= dbConnect.prepareStatement(query1);
             PreparedStatement pstm2= dbConnect.prepareStatement(query2);
         ){
             pstm1.setString(1,classe.getSigle());
-            pstm1.setInt(2,classe.getIdClasse());
+            pstm1.setInt(2,classe.getAnnee());
             pstm1.setString(3,classe.getSpecialite());
-            pstm1.setInt(4,classe.getAnnee());
-            pstm1.setInt(5,classe.getNbreEleves());
+            pstm1.setInt(4,classe.getNbreEleves());
             int n = pstm1.executeUpdate();
             if(n==1){
-                pstm2.setInt(1,classe.getIdClasse());
+                pstm2.setString(1,classe.getSigle());
                 ResultSet rs= pstm2.executeQuery();
                 if(rs.next()){
                     int idclasse= rs.getInt(1);
@@ -55,7 +54,7 @@ public class ModelClasseDB extends DAOclasse{
             else return null;
 
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
 
             return null;
         }
@@ -80,7 +79,7 @@ public class ModelClasseDB extends DAOclasse{
 
     @Override
     public Classe updateClasse(Classe classe) {
-        String query = "update API2_CLASSE set sigle =?,annee=?,specialite=?,nbreEleves=? where id_classe = ?";
+        String query = "update API2_CLASSE set SIGLE =?,ANNEE=?,SPECIALITE=?,NBREELEVESs=? where ID_CLASSE = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, classe.getSigle());
             pstm.setInt(2,classe.getAnnee());
