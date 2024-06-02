@@ -58,8 +58,7 @@ public class GestEcole {
         em.addObserver(ev);
         sm.addObserver(sv);
 
-        // Menu principal
-        List<String> loptions = Arrays.asList("classe", "cours", "enseignant", "salle", "fin");
+        List<String> loptions = Arrays.asList("Gérer classe", "Gérer cours", "Gérer enseignant", "Gérer salle", "fin");
         do {
             int ch = Utilitaire.choixListe(loptions);
             switch (ch) {

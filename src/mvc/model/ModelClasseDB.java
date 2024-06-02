@@ -90,12 +90,13 @@ public class ModelClasseDB extends DAOclasse {
 
     @Override
     public Classe updateClasse(Classe classe) {
-        String query = "update API2_CLASSE set SIGLE =?,ANNEE=?,SPECIALITE=?,NBREELEVESs=? where ID_CLASSE = ?";
+        String query = "update API2_CLASSE set SIGLE =?,ANNEE=?,SPECIALITE=?,NBREELEVES=? where ID_CLASSE = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, classe.getSigle());
             pstm.setInt(2, classe.getAnnee());
             pstm.setString(3, classe.getSpecialite());
             pstm.setInt(4, classe.getNbreEleves());
+            pstm.setInt(5,classe.getIdClasse());
             int n = pstm.executeUpdate();
             notifyObservers();
             if (n != 0) return readClasse(classe.getIdClasse());
@@ -156,20 +157,19 @@ public class ModelClasseDB extends DAOclasse {
     }
 
     @Override
-    public boolean addCours(Classe classe, Cours cours, int nbrheure) {
-        String query = "insert into  API2_COURS(id_cours,code,intitule,id_salle) values(?,?,?,?)";
+    public boolean addCours(Salle salle,Classe classe, Cours cours, int nbrheure, Enseignant enseignant) {
+        String query = "insert into  API2_INFOS(ID_SALLE,ID_ENSEIGNANT,ID_COURS,NBREHEURES,ID_CLASSE) values(?,?,?,?,?)";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, classe.getIdClasse());
-            pstm.setInt(2, cours.getId_cours());
-            pstm.setInt(3, nbrheure);
-            pstm.setInt(4, cours.getSalleParDefaut().getIdSalle());
+            pstm.setInt(1, salle.getIdSalle());
+            pstm.setInt(2, enseignant.getIdEnseignant());
+            pstm.setInt(3, cours.getId_cours());
+            pstm.setInt(4, nbrheure);
+            pstm.setInt(5, classe.getIdClasse());
             int n = pstm.executeUpdate();
-            if (n != 0) return true;
-            else return false;
-
+            notifyObservers();
+            return n != 0;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
-
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }

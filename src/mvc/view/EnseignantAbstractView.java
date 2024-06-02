@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class EnseignantAbstractView implements Observer {
     protected EnseignantController enseignantController;
-    protected List<Enseignant> cl;
+    protected List<Enseignant> en;
 
     public void setController(EnseignantController enseignantController) {
         this.enseignantController = enseignantController;
@@ -23,9 +23,9 @@ public abstract class EnseignantAbstractView implements Observer {
     public abstract void affList(List l);
 
     @Override
-    public void update(List lc) {
-        this.cl = lc;
-        affList(lc);
+    public void update(List en) {
+        this.en = en;
+        affList(en);
     }
 
 }

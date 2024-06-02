@@ -56,7 +56,7 @@
          */
 
         public Enseignant(int idEnseignant, String matricule, String nom, String prenom, String tel, int chargeSem, double salaireMensu, LocalDate dateEngag) {
-            this.idEnseignant = id++;
+            this.idEnseignant = idEnseignant;
             this.matricule = matricule;
             this.nom = nom;
             this.prenom = prenom;

@@ -80,6 +80,7 @@ public class ModelSalleDB extends DAOsalle{
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, salle.getSigle());
             pstm.setInt(2,salle.getCapacite());
+            pstm.setInt(3,salle.getIdSalle());
             int n = pstm.executeUpdate();
             notifyObservers();
             if(n!=0) return readSalle(salle.getIdSalle());
@@ -128,9 +129,9 @@ public class ModelSalleDB extends DAOsalle{
         try(Statement stm = dbConnect.createStatement()) {
             ResultSet rs = stm.executeQuery(query);
             while(rs.next()){
-                int id_salle = rs.getInt(1);
-                String sigle = rs.getString(2);
-                int capacite = rs.getInt(3);
+                int id_salle = rs.getInt("ID_SALLE");
+                String sigle = rs.getString("SIGLE");
+                int capacite = rs.getInt("CAPACITE");
                 Salle sl = new Salle(id_salle,sigle,capacite);
                 sal.add(sl);
             }

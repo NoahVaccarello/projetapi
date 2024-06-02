@@ -96,7 +96,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
 
     private void modifier() {
-        int nl = choixListe(cl);
+        int nl = choixElt(cl);
         Classe cla = cl.get(nl - 1);
         String sigle = modifyIfNotBlank("numéro du sigle", cla.getSigle());
         int annee = Integer.parseInt(modifyIfNotBlank("Annee de cours", "" + cla.getAnnee()));
@@ -146,7 +146,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     @Override
     public Classe selectionner() {
         update(classeController.getAll());
-        int nl = choixListe(cl);
+        int nl = choixElt(cl);
         Classe cla = cl.get(nl - 1);
         return cla;
     }
@@ -166,11 +166,15 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void ajouterCours(Classe cl) {
 
+        System.out.println("Ajouter une salle");
+        Salle salle = salleA.selectionner();
+        System.out.println("Id enseignant :");
+        Enseignant enseignant = enseignantA.selectionner();
         System.out.println("Ajouter un cours");
         Cours cr = courA.selectionner();
         System.out.println("Nombre d'heure du cours : ");
         int heure = sc.nextInt();
-        boolean ok = classeController.addCours(cl, cr, heure);
+        boolean ok = classeController.addCours(salle,cl, cr, heure,enseignant);
         if (ok) affMsg("Cours ajouté avec succes");
         else affMsg("erreur lors de l'ajout du cours");
     }

@@ -19,8 +19,8 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
     }
 
     @Override
-    public void affList(List l) {
-
+    public void affList(List infos) {
+        affListe(infos);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
     }
 
     private void modifier() {
-        int nl = choixElt(cl);
-        Enseignant enseignant = cl.get(nl);
+        int nl = choixListe(en);
+        Enseignant enseignant = en.get(nl);
         String matricule= modifyIfNotBlank("numéro du matricule",enseignant.getMatricule());
         String nom = modifyIfNotBlank("nom", enseignant.getNom());
         String prenom = modifyIfNotBlank("prenom", enseignant.getPrenom());
@@ -70,14 +70,15 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         Enseignant ens = enseignantController.searchEnseignant(id_enseignant);
         if(ens==null) affMsg("recherche infructueuse");
         else {
+
             affMsg(ens.toString());
         }
     }
 
     private void retirer() {
 
-        int nl = choixElt(cl);
-        Enseignant enseignant = cl.get(nl-1);
+        int nl = choixElt(en)-1;
+        Enseignant enseignant = en.get(nl);
         boolean ok = enseignantController.removeEnseignant(enseignant);
         if(ok) affMsg("enseignant effacé");
         else affMsg("ensaignent non effacé");
@@ -97,11 +98,11 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         System.out.print("salaire mensu : ");
         double salairemensu = Double.parseDouble(sc.nextLine());
         // pour que la date sois plus facile a rentrer j'ai trouver cette façon de faire sur internet
-        System.out.print("Jour de la date : ");
+        System.out.print("Jour de la date d'engagement : ");
         int jour = Integer.parseInt(sc.nextLine());
-        System.out.print("Mois de la date : ");
+        System.out.print("Mois de la date d'engagement : ");
         int mois = Integer.parseInt(sc.nextLine());
-        System.out.print("Année de la date : ");
+        System.out.print("Année de la date d'engagement : ");
         int annee = Integer.parseInt(sc.nextLine());
 
         LocalDate datee = LocalDate.of(annee, mois, jour);
@@ -110,7 +111,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         if (enseignant != null) {
             affMsg("Création de : " + enseignant);
         } else {
-            affMsg("Erreur de création");
+            affMsg("Erreur de création"); // le message d'erreur s'affiche alors que l'enseignant a bien ete ajouter
         }
     }
 
@@ -118,8 +119,8 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
     @Override
     public Enseignant selectionner() {
         update(enseignantController.getAll());
-        int nl = choixListe(cl);
-        Enseignant ens = cl.get(nl - 1);
+        int nl = choixListe(en);
+        Enseignant ens = en.get(nl - 1);
         return ens;
     }
 }

@@ -45,21 +45,8 @@ public class SalleViewConsole extends SalleAbstractView {
         }while(true);
     }
 
-    private void afficherListeSalle() {
-        List<Salle> salle = salleController.getAll();
-        if (salle != null && !salle.isEmpty()) {
-            System.out.println("Liste des salles : ");
-            for (Salle s : salle) {
-                System.out.println(s.toString());
-            }
-        } else {
-            System.out.println("Aucun cours trouvé.");
-        }
-    }
-
     private void modifier() {
-        afficherListeSalle();
-        int nl = choixElt(sl);
+        int nl = choixListe(sl);
         Salle salle = sl.get(nl-1);
         String sigle = modifyIfNotBlank("sigle de la salle", salle.getSigle());
         int capacite = parseInt(modifyIfNotBlank("capacite de la salle", "" + salle.getCapacite()));
@@ -69,7 +56,6 @@ public class SalleViewConsole extends SalleAbstractView {
     }
 
     private void rechercher() {
-        afficherListeSalle();
         System.out.println("id de la salle : ");
         int idSalle = sc.nextInt();
         Salle salle = salleController.searchSalle(idSalle);
@@ -81,7 +67,6 @@ public class SalleViewConsole extends SalleAbstractView {
     }
     private void retirer() {
 
-        afficherListeSalle();
         int nl = choixElt(sl);
         Salle sal = sl.get(nl-1);
         boolean ok = salleController.removeSalle(sal);
@@ -95,7 +80,7 @@ public class SalleViewConsole extends SalleAbstractView {
         System.out.print("capacité de la salle: ");
         int capacite = sc.nextInt();
         Salle sal = salleController.addSalle(new Salle(0, sigle, capacite));
-        if(sal!=null) affMsg("création de :"+sal);
+        if(sal!=null) affMsg("création de :"+sal);// le message d'erreur s'affiche alord que la salle s'est bien ajouter dans la db
         else affMsg("erreur de création");
     }
 
