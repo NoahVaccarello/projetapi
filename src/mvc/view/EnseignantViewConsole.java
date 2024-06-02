@@ -58,7 +58,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         int chargeSem = parseInt(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
         double salaireMensu = Double.parseDouble(modifyIfNotBlank("chargesem","" + enseignant.getChargeSem()));
         String date = modifyIfNotBlank("date d'engagement :", enseignant.getDateEngag() + "");
-        LocalDate dateengag = !date.equals("null") ? LocalDate.parse(date) : null;
+        LocalDate dateengag = !date.equals("null")?LocalDate.parse(date):null;
         Enseignant ens =enseignantController.updateEnseignant(new Enseignant(enseignant.getIdEnseignant(), matricule, nom, prenom, tel, chargeSem, salaireMensu, dateengag));
         if(ens==null) affMsg("mise à jour infructueuse");
         else affMsg("mise à jour effectuée : "+ens);
@@ -93,16 +93,27 @@ public class EnseignantViewConsole extends EnseignantAbstractView{
         System.out.print("tel : ");
         String tel = sc.nextLine();
         System.out.print("chargesem : ");
-        int chargesem = parseInt(sc.nextLine());
+        int chargesem = Integer.parseInt(sc.nextLine());
         System.out.print("salaire mensu : ");
         double salairemensu = Double.parseDouble(sc.nextLine());
-        System.out.print("Date : ");
-        String date = sc.nextLine();
-        LocalDate datee = LocalDate.parse(date);
-        Enseignant enseignant = enseignantController.addEnseignant(new Enseignant(0,matricule,nom,prenom,tel,chargesem,salairemensu,datee)) ;
-        if(enseignant!=null) affMsg("création de :"+enseignant);
-        else affMsg("erreur de création");
+        // pour que la date sois plus facile a rentrer j'ai trouver cette façon de faire sur internet
+        System.out.print("Jour de la date : ");
+        int jour = Integer.parseInt(sc.nextLine());
+        System.out.print("Mois de la date : ");
+        int mois = Integer.parseInt(sc.nextLine());
+        System.out.print("Année de la date : ");
+        int annee = Integer.parseInt(sc.nextLine());
+
+        LocalDate datee = LocalDate.of(annee, mois, jour);
+
+        Enseignant enseignant = enseignantController.addEnseignant(new Enseignant(0, matricule, nom, prenom, tel, chargesem, salairemensu, datee));
+        if (enseignant != null) {
+            affMsg("Création de : " + enseignant);
+        } else {
+            affMsg("Erreur de création");
+        }
     }
+
 
     @Override
     public Enseignant selectionner() {

@@ -96,7 +96,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
 
     private void modifier() {
-        int nl = choixElt(cl);
+        int nl = choixListe(cl);
         Classe cla = cl.get(nl - 1);
         String sigle = modifyIfNotBlank("numéro du sigle", cla.getSigle());
         int annee = Integer.parseInt(modifyIfNotBlank("Annee de cours", "" + cla.getAnnee()));
